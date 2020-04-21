@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/firestore';
 
 const app = firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -12,5 +13,18 @@ const app = firebase.initializeApp({
 });
 
 const db = firebase.firestore();
+
+export const createBancale = (number, family, width, length) => {
+  const area = width * length;
+  return db.collection('bancali')
+    .add({
+      created: firebase.firestore.FieldValue.serverTimestamp(),
+      number: number,
+      family: family,
+      width: width,
+      length: length, 
+      area: area,
+    });
+};
 
 export default app;
