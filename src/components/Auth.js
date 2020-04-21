@@ -3,6 +3,7 @@ import app from '../services/firestore';
 
 export const AuthContext = React.createContext();
 
+// eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [pending, setPending] = useState(true);

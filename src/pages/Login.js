@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useCallback, useContext } from 'react';
 import { withRouter, Redirect } from 'react-router';
 import app from '../services/firestore';
@@ -14,6 +15,7 @@ const Login = ({ history }) => {
           .signInWithEmailAndPassword(email.value, password.value);
         history.push('/');
       } catch (error) {
+        // eslint-disable-next-line no-undef
         alert(error);
       }
     },

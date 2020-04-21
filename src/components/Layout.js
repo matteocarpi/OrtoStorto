@@ -1,6 +1,7 @@
 import React from 'react';
 import app from '../services/firestore';
 
+// eslint-disable-next-line react/prop-types
 const Dashboard = ({ children }) => {
   return (
     <div>
