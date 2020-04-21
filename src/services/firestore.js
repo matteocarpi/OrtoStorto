@@ -1,8 +1,6 @@
 /* eslint-disable no-undef */
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-import 'firebase/firestore';
-import Reactotron from 'reactotron-react-js';
 
 const app = firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -14,25 +12,5 @@ const app = firebase.initializeApp({
 });
 
 const db = firebase.firestore();
-
-export const createBancale = (number, family, width, length) => {
-  Reactotron.log('I got called!');
-  const area = length * width;
-
-  return db.collection('bancali').add({
-    created: firebase.firestore.FieldValue.serverTimestamp(),
-    number: number,
-    family: family,
-    width: width,
-    length: length,
-    area: area,
-  })
-    .then(function(docRef) {
-      console.log('Document written with ID: ', docRef.id);
-    })
-    .catch(function(error) {
-      console.error('Error adding document: ', error);
-    });
-};
 
 export default app;
