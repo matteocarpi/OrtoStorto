@@ -5,13 +5,15 @@ import Reactotron from 'reactotron-react-js';
 
 const Bancali = () => {
   const [bancaliList, setBancaliList] = useState([]);
-  
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const unsubscribe = FirestoreService.getBancali({
       next: querySnapshot => {
         const updatedBancaliList = 
         querySnapshot.docs.map(docSnapshot => docSnapshot.data());
         setBancaliList(updatedBancaliList);
+        setLoading(false);
       },
     });
     return unsubscribe;
@@ -19,9 +21,13 @@ const Bancali = () => {
   return (
     <Layout>
       <h1>Bancali</h1>
-      {bancaliList.map((bancale, index) => {
-        return <h2 key={index}>{bancale.number}</h2>;
-      })}
+      {loading 
+        ? 
+        <p>Loading...</p>
+        : 
+        bancaliList.map((bancale, index) => {
+          return <h2 key={index}>{bancale.number}</h2>;
+        })}
     </Layout>
   );
 };
