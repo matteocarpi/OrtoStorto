@@ -1,5 +1,4 @@
 import React, { Suspense } from 'react';
-import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Home from './pages/Dashboard';
 import NewBancale from './actions/NewBancale';

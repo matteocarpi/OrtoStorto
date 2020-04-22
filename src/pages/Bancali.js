@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from '../components/Layout';
 import { Link } from 'react-router-dom';
-import { useFind, useDB } from 'react-pouchdb';
+import { useFind } from 'react-pouchdb';
 import Reactotron from 'reactotron-react-js';
 
 const Bancali = () => {

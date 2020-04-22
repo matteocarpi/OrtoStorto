@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Layout from '../components/Layout';
 import { useDB } from 'react-pouchdb';
+import PropTypes from 'prop-types';
 
 import Reactotron from 'reactotron-react-js';
 
@@ -9,7 +10,6 @@ const NewBancale = ({ history }) => {
   const db = useDB();
 
   const onSubmitHandling = (event) => {
-    setLoading(true);
     event.preventDefault();
 
     const area = event.target.elements.width.value * event.target.elements.lunghezza.value;
@@ -25,13 +25,10 @@ const NewBancale = ({ history }) => {
     }).then()
       .then((resp) => {
         Reactotron.log(resp);
-        setLoading(false);
         history.push('/bancali');
       })
       .catch(e => Reactotron.error(e));
   };
-
-  const [loading, setLoading] = useState(false);
 
 
   return (
@@ -66,3 +63,7 @@ const NewBancale = ({ history }) => {
 };
 
 export default NewBancale;
+
+NewBancale.propTypes = {
+  history: PropTypes.node,
+};
