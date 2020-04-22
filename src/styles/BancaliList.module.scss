@@ -1,0 +1,21 @@
+.title {
+    text-align: center;
+}
+.bancali {
+    display: flex;
+}
+.bancale {
+    h2 {
+        text-align: center;
+    }
+    border: solid 1px;
+    width: min-content;
+    padding: 2rem;
+    margin: 1rem;
+}
+
+.createNew {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
