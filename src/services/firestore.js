@@ -2,6 +2,7 @@
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import Reactotron from 'reactotron-react-js';
 
 const app = firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -13,6 +14,11 @@ const app = firebase.initializeApp({
 });
 
 const db = firebase.firestore();
+
+export const getBancali = (observer) => {
+  return db.collection('bancali')
+    .onSnapshot(observer);
+};
 
 export const createBancale = (number, family, width, length) => {
   console.log('I got called!');
