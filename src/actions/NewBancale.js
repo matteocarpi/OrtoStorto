@@ -32,9 +32,9 @@ const NewBancale = () => {
           </select>
         </p>
         <p><label>Qual è la larghezza di questo bancale?</label></p>
-        <p><input type="number" name="width" /></p>
+        <p><input step="any" type="number" name="width" /></p>
         <p><label>E la lunghezza?</label></p>
-        <p><input type="number" name="lunghezza" /></p>
+        <p><input step="any" type="number" name="lunghezza" /></p>
         <button type="submit">Crea Bancale!</button>
       </form>
     </Layout>
