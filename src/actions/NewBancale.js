@@ -15,17 +15,20 @@ const NewBancale = ({ history }) => {
     const area = event.target.elements.width.value * event.target.elements.lunghezza.value;
 
     db.put({
-      _id: `bancale: ${event.target.elements.number.value}`,
+      _id: `bancale:${event.target.elements.number.value}`,
+      collection: 'bancali',
       number: event.target.elements.number.value,
       family: event.target.elements.family.value,
       width: event.target.elements.width.value,
       length: event.target.elements.lunghezza.value,
       area: area,
-    })
-      .then(() => {
+    }).then()
+      .then((resp) => {
+        Reactotron.log(resp);
         setLoading(false);
         history.push('/bancali');
-      }).catch(e => Reactotron.error(e));
+      })
+      .catch(e => Reactotron.error(e));
   };
 
   const [loading, setLoading] = useState(false);
@@ -52,10 +55,10 @@ const NewBancale = ({ history }) => {
             <option value = "Solanacee">Solanacee</option>
           </select>
         </p>
-        <p><label>Qual è la larghezza di questo bancale?</label></p>
-        <p><input step="any" type="number" name="width" /></p>
-        <p><label>E la lunghezza?</label></p>
+        <p><label>Qual è la lunghezza di questo bancale?</label></p>
         <p><input step="any" type="number" name="lunghezza" /></p>
+        <p><label>E la larghezza?</label></p>
+        <p><input step="any" type="number" name="width" /></p>
         <button type="submit">Crea Bancale!</button>
       </form>
     </Layout>

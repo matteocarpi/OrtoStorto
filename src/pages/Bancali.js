@@ -1,17 +1,23 @@
 import React from 'react';
 import Layout from '../components/Layout';
 import { Link } from 'react-router-dom';
-import { useFind } from 'react-pouchdb';
+import { useFind, useDB } from 'react-pouchdb';
 import Reactotron from 'reactotron-react-js';
 
 const Bancali = () => {
   const bancali = useFind({
     selector: {
-      name: { $gte: null },
+      collection: 'bancali',
     },
-    sort: ['name'],
-  },
-  );
+  });
+  Reactotron.log('meme', bancali);
+  // const bancali = useFind({
+  //   selector: { 
+  //     id : { $gte: null },
+  //     sort: ['number'],
+  //   },
+  // },
+  // );
   return (
     <Layout>
       <h1>Bancali</h1>
