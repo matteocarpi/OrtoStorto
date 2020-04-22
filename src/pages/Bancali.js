@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import * as FirestoreService from '../services/firestore';
+import { Link } from 'react-router-dom';
+
 import Reactotron from 'reactotron-react-js';
 
 const Bancali = () => {
@@ -28,6 +30,7 @@ const Bancali = () => {
         bancaliList.map((bancale, index) => {
           return <h2 key={index}>{bancale.number}</h2>;
         })}
+        <Link to="/new-bancale">Crea Nuovo Bancale</Link>
     </Layout>
   );
 };
