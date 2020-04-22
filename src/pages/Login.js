@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useCallback, useContext } from 'react';
 import { withRouter, Redirect } from 'react-router';
-import app from '../services/firestore';
+import app from '../services/pouchDB';
 import { AuthContext } from '../components/Auth';
 
 const Login = ({ history }) => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
-import * as FirestoreService from '../services/firestore';
+import * as FirestoreService from '../services/pouchDB';
 import { Link } from 'react-router-dom';
 
 import Reactotron from 'reactotron-react-js';

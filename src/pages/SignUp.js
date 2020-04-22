@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { withRouter } from 'react-router';
-import app from '../services/firestore';
+import app from '../services/pouchDB';
 
 const Signup = ({ history }) => {
   const handleSignUp = useCallback(async event => {

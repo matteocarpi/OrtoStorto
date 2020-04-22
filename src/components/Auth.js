@@ -1,5 +1,5 @@
 import React, { useEffect,  useState } from 'react';
-import app from '../services/firestore';
+import app from '../services/pouchDB';
 
 export const AuthContext = React.createContext();
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import app from '../services/firestore';
+import app from '../services/pouchDB';
 
 // eslint-disable-next-line react/prop-types
 const Dashboard = ({ children }) => {
