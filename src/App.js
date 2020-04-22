@@ -7,6 +7,7 @@ import Signup from './pages/SignUp';
 import NewBancale from './actions/NewBancale';
 import { AuthProvider } from './components/Auth';
 import PrivateRoute from './components/PrivateRoute';
+import Bancali from './pages/Bancali';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <div>
           <PrivateRoute exact path="/" component={Home} />
           <PrivateRoute exact path="/new-bancale" component={NewBancale} />
+          <PrivateRoute exact path="/bancali" component={Bancali} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
         </div>

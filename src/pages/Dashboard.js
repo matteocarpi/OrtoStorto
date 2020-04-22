@@ -7,7 +7,9 @@ const Dashboard = () => {
     <Layout>
       <div>
         <h1>Dashboard</h1>
-        <Link to="/new-bancale">Add Bancale</Link>
+        <Link to="/new-bancale">Crea Nuovo Bancale</Link>
+        <br></br>
+        <Link to="/bancali">Lista dei Bancali</Link>
       </div>
     </Layout>
   );
