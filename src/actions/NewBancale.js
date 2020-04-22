@@ -38,7 +38,7 @@ const NewBancale = ({ history }) => {
       
       <form onSubmit={onSubmitHandling} name="createBancale">
         <p><label>Qual è il numero di questo Bancale?</label></p>
-        <p><input type="number" name="number" /></p>
+        <p><input type="text" name="number" /></p>
         <p><label>A che famiglia vuoi assegnare questo bancale?</label></p>
         <p>
           <select name="family">
