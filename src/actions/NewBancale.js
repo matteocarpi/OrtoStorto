@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import Reactotron from 'reactotron-react-js';
 
 const NewBancale = ({ history }) => {
-  const [alreadyExists, setAlreadyExists] = useState(false);
   const [bancaleNumber, setBancaleNumber] = useState('');
   const db = useDB();
   const currentBancale = useFind({
@@ -14,9 +13,6 @@ const NewBancale = ({ history }) => {
       _id: `bancale:${bancaleNumber}`,
     },
   });
-
-  currentBancale.length !== 0 && setAlreadyExists(true);
-  Reactotron.log(alreadyExists);
 
   Reactotron.log(bancaleNumber);
   const onSubmitHandling = (event) => {
@@ -50,7 +46,7 @@ const NewBancale = ({ history }) => {
       <form onSubmit={onSubmitHandling} name="createBancale">
         <p><label>Qual è il numero di questo Bancale?</label></p>
         <p><input type="text" name="number" value={bancaleNumber} onChange={e => setBancaleNumber(e.target.value)}/></p>
-        <p style={{display: !alreadyExists ? 'none' : 'block'}}>Questo bancale già esiste, scegli un altro nome...</p>
+        <p style={{color: 'red', display: currentBancale.length === 0 ? 'none' : 'block'}}>Questo bancale già esiste, scegli un altro nome...</p>
         <p><label>A che famiglia vuoi assegnare questo bancale?</label></p>
         <p>
           <select name="family">
