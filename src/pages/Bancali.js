@@ -1,36 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Layout from '../components/Layout';
-import * as FirestoreService from '../services/pouchDB';
 import { Link } from 'react-router-dom';
-
+import { useFind } from 'react-pouchdb';
 import Reactotron from 'reactotron-react-js';
 
 const Bancali = () => {
-  const [bancaliList, setBancaliList] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const unsubscribe = FirestoreService.getBancali({
-      next: querySnapshot => {
-        const updatedBancaliList = 
-        querySnapshot.docs.map(docSnapshot => docSnapshot.data());
-        setBancaliList(updatedBancaliList);
-        setLoading(false);
-      },
-    });
-    return unsubscribe;
-  });
+  const bancali = useFind({
+    selector: {
+      name: { $gte: null },
+    },
+    sort: ['name'],
+  },
+  );
   return (
     <Layout>
       <h1>Bancali</h1>
-      {loading 
-        ? 
-        <p>Loading...</p>
-        : 
-        bancaliList.map((bancale, index) => {
-          return <h2 key={index}>{bancale.number}</h2>;
-        })}
-        <Link to="/new-bancale">Crea Nuovo Bancale</Link>
+      {bancali.map((bancale, i) => {
+        return (
+          <>
+            <h2 key={i}>{bancale.number}</h2>
+            <p>{bancale.family}</p>
+          </>
+        );
+      })}
+      <Link to="/new-bancale">Crea Nuovo Bancale</Link>
     </Layout>
   );
 };

@@ -1,27 +1,25 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Home from './pages/Dashboard';
-import Login from './pages/Login';
-import Signup from './pages/SignUp';
 import NewBancale from './actions/NewBancale';
-import { AuthProvider } from './components/Auth';
-import PrivateRoute from './components/PrivateRoute';
 import Bancali from './pages/Bancali';
+import { PouchDB } from 'react-pouchdb';
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <div>
-          <PrivateRoute exact path="/" component={Home} />
-          <PrivateRoute exact path="/new-bancale" component={NewBancale} />
-          <PrivateRoute exact path="/bancali" component={Bancali} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/signup" component={Signup} />
-        </div>
-      </Router>
-    </AuthProvider>
+    <PouchDB name="ortoStorto">
+      <Suspense fallback="...loading">
+
+        <Router>
+          <div>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/new-bancale" component={NewBancale} />
+            <Route exact path="/bancali" component={Bancali} />
+          </div>
+        </Router>
+      </Suspense>
+    </PouchDB>
   );
 }
 
