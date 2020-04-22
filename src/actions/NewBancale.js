@@ -1,23 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Layout from '../components/Layout';
-import { useDB } from 'react-pouchdb';
+import { useDB, useFind } from 'react-pouchdb';
 import PropTypes from 'prop-types';
 
 import Reactotron from 'reactotron-react-js';
 
 const NewBancale = ({ history }) => {
-
+  const [alreadyExists, setAlreadyExists] = useState(false);
+  const [bancaleNumber, setBancaleNumber] = useState('');
   const db = useDB();
+  const currentBancale = useFind({
+    selector: {
+      _id: `bancale:${bancaleNumber}`,
+    },
+  });
 
+  currentBancale.length !== 0 && setAlreadyExists(true);
+  Reactotron.log(alreadyExists);
+
+  Reactotron.log(bancaleNumber);
   const onSubmitHandling = (event) => {
     event.preventDefault();
 
     const area = event.target.elements.width.value * event.target.elements.lunghezza.value;
 
+    
     db.put({
       _id: `bancale:${event.target.elements.number.value}`,
       collection: 'bancali',
-      number: event.target.elements.number.value,
+      number: bancaleNumber,
       family: event.target.elements.family.value,
       width: event.target.elements.width.value,
       length: event.target.elements.lunghezza.value,
@@ -38,7 +49,8 @@ const NewBancale = ({ history }) => {
       
       <form onSubmit={onSubmitHandling} name="createBancale">
         <p><label>Qual è il numero di questo Bancale?</label></p>
-        <p><input type="text" name="number" /></p>
+        <p><input type="text" name="number" value={bancaleNumber} onChange={e => setBancaleNumber(e.target.value)}/></p>
+        <p style={{display: !alreadyExists ? 'none' : 'block'}}>Questo bancale già esiste, scegli un altro nome...</p>
         <p><label>A che famiglia vuoi assegnare questo bancale?</label></p>
         <p>
           <select name="family">
