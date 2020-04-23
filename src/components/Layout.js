@@ -5,9 +5,10 @@ import Sidebar from './Sidebar';
 const Dashboard = ({ children }) => {
   return (
     <div>
-      <Sidebar>
+      <Sidebar />
+      <div>
         {children}
-      </Sidebar>
+      </div>
     </div>
   );
 };
