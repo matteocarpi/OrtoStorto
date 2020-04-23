@@ -6,6 +6,8 @@ import Reactotron from 'reactotron-react-js';
 import styles from '../styles/BancaliList.module.scss';
 import Bancale from './Bancale';
 
+// @emiliano bovetti <3
+
 const Bancali = () => {
   const db = useDB();
 
