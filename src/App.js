@@ -9,20 +9,20 @@ import styles from './styles/App.module.scss';
 
 function App() {
   return (
-    <div className={styles.container}>
-      <Sidebar />
-      <PouchDB name="ortoStorto">
-        <Suspense fallback="...loading">
-          <Router>
+    <PouchDB name="ortoStorto">
+      <Suspense fallback="...loading">
+        <Router>
+          <div className={styles.container}>
+            <Sidebar />
             <div>
               <Route exact path="/" component={Home} />
               <Route exact path="/new-bancale" component={NewBancale} />
               <Route exact path="/bancali" component={Bancali} />
             </div>
-          </Router>
-        </Suspense>
-      </PouchDB>
-    </div>
+          </div>
+        </Router>
+      </Suspense>
+    </PouchDB>
   );
 }
 

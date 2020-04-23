@@ -1,5 +1,4 @@
 import React from 'react';
-import Sidebar from './Sidebar';
 import styles from '../styles/Layout.module.scss';
 
 // eslint-disable-next-line react/prop-types
