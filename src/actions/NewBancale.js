@@ -1,16 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import PropTypes from 'prop-types';
 import Reactotron from 'reactotron-react-js';
 import { useDB } from '../services/pouchDB';
 
 const NewBancale = ({ history }) => {
-  const [bancaleNumber, setBancaleNumber] = useState('');
-  const currentBancale = [];
-  
   const db = useDB();
 
-  Reactotron.log(bancaleNumber);
+  const [bancaleNumber, setBancaleNumber] = useState('');
+  const [bancaleExists, setBancaleExists] = useState();
+  
+  Reactotron.log('Bancale Number', bancaleNumber);
+  Reactotron.log('Bancale Exists', bancaleExists);
+
+  useEffect(() => {
+    db.get(`bancale:${bancaleNumber}`).then(() => setBancaleExists(true)).catch(() => setBancaleExists(false));
+  }, [db, bancaleNumber]);
+  
   const onSubmitHandling = (event) => {
     event.preventDefault();
 
@@ -42,7 +48,7 @@ const NewBancale = ({ history }) => {
       <form onSubmit={onSubmitHandling} name="createBancale">
         <p><label>Qual è il numero di questo Bancale?</label></p>
         <p><input type="text" name="number" value={bancaleNumber} onChange={e => setBancaleNumber(e.target.value)}/></p>
-        <p style={{color: 'red', display: currentBancale.length === 0 ? 'none' : 'block'}}>Questo bancale già esiste, scegli un altro nome...</p>
+        <p style={{color: 'red', display: bancaleExists ?  'block' : 'none'}}>Questo bancale già esiste, scegli un altro nome...</p>
         <p><label>A che famiglia vuoi assegnare questo bancale?</label></p>
         <p>
           <select name="family">
