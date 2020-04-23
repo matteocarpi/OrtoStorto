@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import Layout from '../components/Layout';
-import { useDB, useFind } from 'react-pouchdb';
 import PropTypes from 'prop-types';
-
 import Reactotron from 'reactotron-react-js';
+import * as Pouch from '../services/pouchDB';
 
 const NewBancale = ({ history }) => {
   const [bancaleNumber, setBancaleNumber] = useState('');
-  const db = useDB();
-  const currentBancale = useFind({
+  const currentBancale = []
+  
+  Pouch.db.get({
     selector: {
       _id: `bancale:${bancaleNumber}`,
     },
