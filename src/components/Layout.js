@@ -6,7 +6,6 @@ import styles from '../styles/Layout.module.scss';
 const Dashboard = ({ children }) => {
   return (
     <div className={styles.container}>
-      <Sidebar className={styles.sideBar}/>
       <div className={styles.content}>
         {children}
       </div>
