@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 
 const Bancale = (props) => {
+
   return (
     <div>
       <h1>{props.number}</h1>

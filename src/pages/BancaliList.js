@@ -22,10 +22,15 @@ const Bancali = () => {
 
   return (
     <Layout>
-      {focusedBancale && <Bancale
-        number="23"
-        family="Brassicacee"
-      />}
+      {focusedBancale &&
+      <div>
+        <Bancale
+          number="23"
+          family="Brassicacee"
+        />
+        <button onClick={() => setFocusedBancale(false)}>Torna a tutti i bancali</button>
+      </div>
+      }
 
       {!focusedBancale &&
         <h1 className={styles.title}>Bancali</h1>
