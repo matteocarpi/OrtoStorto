@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Home from './pages/Dashboard';
 import NewBancale from './actions/NewBancale';
-import Bancali from './pages/Bancali';
+import Bancali from './pages/BancaliList';
 import Sidebar from './components/Sidebar';
 import styles from './styles/App.module.scss';
 import { PouchDB } from './services/pouchDB';
