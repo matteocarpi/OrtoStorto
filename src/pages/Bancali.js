@@ -1,16 +1,13 @@
 import React from 'react';
 import Layout from '../components/Layout';
 import { Link } from 'react-router-dom';
-import { useFind } from 'react-pouchdb';
+import { useDB } from '../services/pouchDB';
 import Reactotron from 'reactotron-react-js';
 import styles from '../styles/BancaliList.module.scss';
 
 const Bancali = () => {
-  const bancali = useFind({
-    selector: {
-      collection: 'bancali',
-    },
-  });
+  const db = useDB();
+  const bancali = useDB().allDocs({ include_docs: true });
   Reactotron.log('meme', bancali);
   // const bancali = useFind({
   //   selector: { 

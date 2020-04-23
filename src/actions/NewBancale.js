@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import PropTypes from 'prop-types';
 import Reactotron from 'reactotron-react-js';
-import * as Pouch from '../services/pouchDB';
+import { useDB } from '../services/pouchDB';
 
 const NewBancale = ({ history }) => {
   const [bancaleNumber, setBancaleNumber] = useState('');
-  const currentBancale = []
+  const currentBancale = [];
   
-  Pouch.db.get({
+  useDB().allDocs({
     selector: {
       _id: `bancale:${bancaleNumber}`,
     },
@@ -21,20 +21,20 @@ const NewBancale = ({ history }) => {
     const area = event.target.elements.width.value * event.target.elements.lunghezza.value;
 
     
-    db.put({
-      _id: `bancale:${event.target.elements.number.value}`,
-      collection: 'bancali',
-      number: bancaleNumber,
-      family: event.target.elements.family.value,
-      width: event.target.elements.width.value,
-      length: event.target.elements.lunghezza.value,
-      area: area,
-    }).then()
-      .then((resp) => {
-        Reactotron.log(resp);
-        history.push('/bancali');
-      })
-      .catch(e => Reactotron.error(e));
+  //   db.put({
+  //     _id: `bancale:${event.target.elements.number.value}`,
+  //     collection: 'bancali',
+  //     number: bancaleNumber,
+  //     family: event.target.elements.family.value,
+  //     width: event.target.elements.width.value,
+  //     length: event.target.elements.lunghezza.value,
+  //     area: area,
+  //   }).then()
+  //     .then((resp) => {
+  //       Reactotron.log(resp);
+  //       history.push('/bancali');
+  //     })
+  //     .catch(e => Reactotron.error(e));
   };
 
 
