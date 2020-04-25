@@ -25,7 +25,6 @@ const NewBancale = ({ history }) => {
     
     db.put({
       _id: `bancale:${event.target.elements.number.value}`,
-      collection: 'bancali',
       number: bancaleNumber,
       family: event.target.elements.family.value,
       width: event.target.elements.width.value,

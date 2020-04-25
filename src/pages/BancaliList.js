@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useDB } from '../services/pouchDB';
 import Reactotron from 'reactotron-react-js';
 import styles from '../styles/BancaliList.module.scss';
-import Bancale from './Bancale';
+import Bancale from '../components/Bancale';
 
 // @emiliano bovetti <3
 
@@ -16,6 +16,8 @@ const Bancali = () => {
 
   const [focusedBancale, setFocusedBancale] = useState();
 
+
+  
   useEffect(() => {
     db.allDocs({ include_docs: true }).then(resp => setBancali(resp.rows)).catch(setBancaliError);
   }, [db]);
@@ -24,10 +26,17 @@ const Bancali = () => {
 
   return (
     <Layout>
-      {focusedBancale && <Bancale
-        number="23"
-        family="Brassicacee"
-      />}
+      {focusedBancale &&
+      <div>
+        <Bancale
+          number={focusedBancale.number}
+          family={focusedBancale.family}
+          width={focusedBancale.width}
+          length={focusedBancale.length}
+        />
+        <button onClick={() => setFocusedBancale(false)}>Torna a tutti i bancali</button>
+      </div>
+      }
 
       {!focusedBancale &&
         <h1 className={styles.title}>Bancali</h1>
@@ -42,7 +51,7 @@ const Bancali = () => {
             {bancali.map((b, i) => {
               const bancale = b.doc;
               return (
-                <button onClick={() => setFocusedBancale(bancale.number)} key={i} className={styles.bancale}>
+                <button onClick={() => setFocusedBancale(bancale)} key={i} className={styles.bancale}>
                   <h2>{bancale.number}</h2>
                   <p>{bancale.family}</p>
                 </button>
