@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import EditBancale from '../components/EditBancale';
+import EditBancale from '../actions/EditBancale';
 
 const Bancale = (props) => {
   const [editBancale, setEditBancale] = useState();
