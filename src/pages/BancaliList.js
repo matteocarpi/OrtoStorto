@@ -22,7 +22,7 @@ const Bancali = () => {
     db.allDocs({ include_docs: true }).then(resp => setBancali(resp.rows)).catch(setBancaliError);
   }, [db]);
 
-  Reactotron.log(bancali);
+  Reactotron.log('Bancali List', bancali);
 
   return (
     <Layout>
@@ -42,9 +42,10 @@ const Bancali = () => {
         <h1 className={styles.title}>Bancali</h1>
       }
 
-      {!focusedBancale && bancali == null ? <p>Loading...</p>
+      {!focusedBancale && !bancali  ? <p>Loading...</p>
         
         :
+        
         !focusedBancale &&
         <>
           <section className={styles.bancali}>

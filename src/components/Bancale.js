@@ -7,13 +7,13 @@ const Bancale = (props) => {
 
   return (
     <div>
-      {editBancale && <EditBancale 
-        number= {props.number}
-        family= {props.family}
-        width= {props.width}
-        length= {props.length}
-      />}
-      {!editBancale && 
+      {editBancale ?  <EditBancale 
+        number={props.number}
+        family={props.family}
+        width={props.width}
+        length={props.length}
+      />
+        :
         <>
           <h1>Bancale Numero: {props.number}</h1>
           <p>Famiglia: {props.family}</p>

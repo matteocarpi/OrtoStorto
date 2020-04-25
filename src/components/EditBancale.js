@@ -7,10 +7,10 @@ const EditBancale = (props) => {
   const db = useDB();
 
   const [error, setError] = useState();
-  const [bancaleExists, setBancaleExists] = useState();
-  Reactotron.error(error);
 
-  const onSubmitHandling = (e) => {
+  const [bancaleExists, setBancaleExists] = useState(false);
+
+  const submitEdit = (e) => {
     const area = props.width * props.length;
     e.preventDefault();
     db.get(`bancale:${props.number}`).then(doc => {
@@ -23,8 +23,9 @@ const EditBancale = (props) => {
         length: props.length,
         area: area,
       });
-    }).then(Reactotron.log('Updated Document!')).catch((e) => setError(e));
+    }).then(resp => Reactotron.log('Updated Document!', resp)).catch((e) => setError(e));
   };
+
   const [newBancaleNumber, setNewBancaleNumber] = useState(props.number);
   const [family, setFamily] = useState(props.family);
   const [width, setWidth] = useState(props.width);
@@ -33,16 +34,15 @@ const EditBancale = (props) => {
   useEffect(() => {
     db.get(`bancale:${newBancaleNumber}`).then(() => newBancaleNumber !== props.number && setBancaleExists(true)).catch(() => setBancaleExists(false));
     Reactotron.log('Bancale exists', bancaleExists);
-  
+
   }, [bancaleExists, db, newBancaleNumber, props.number]);
 
   return (
     <>
-      {error ? <p>Ops... Something went wrong...</p>
-        
+      {error ? <p>Ops... Something went wrong... {Reactotron.error(error)} </p> 
         :
 
-        <form onSubmit={onSubmitHandling} name="createBancale">
+        <form onSubmit={submitEdit} name="createBancale">
           <p><label>Qual è il numero di questo Bancale?</label></p>
           <p><input type="text" name="number" value={newBancaleNumber} onChange={e => setNewBancaleNumber(e.target.value)}/></p>
           <p style={{color: 'red', display: bancaleExists ?  'block' : 'none'}}>Questo bancale già esiste, scegli un altro nome...</p>

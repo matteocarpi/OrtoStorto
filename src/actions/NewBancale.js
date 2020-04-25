@@ -22,7 +22,7 @@ const NewBancale = ({ history }) => {
 
     const area = event.target.elements.width.value * event.target.elements.lunghezza.value;
 
-    
+    Reactotron.log('Creating a new doc!');
     db.put({
       _id: `bancale:${event.target.elements.number.value}`,
       number: bancaleNumber,
