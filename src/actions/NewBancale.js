@@ -3,15 +3,18 @@ import Layout from '../components/Layout';
 import PropTypes from 'prop-types';
 import Reactotron from 'reactotron-react-js';
 import { useDB } from '../services/pouchDB';
+import { v4 as uuid4 } from 'uuid';
 
 const NewBancale = ({ history }) => {
   const db = useDB();
 
   const [bancaleNumber, setBancaleNumber] = useState('');
   const [bancaleExists, setBancaleExists] = useState();
-  
+  const uuid = uuid4();
+
   Reactotron.log('Bancale Number', bancaleNumber);
   Reactotron.log('Bancale Exists', bancaleExists);
+
 
   useEffect(() => {
     db.get(`bancale:${bancaleNumber}`).then(() => setBancaleExists(true)).catch(() => setBancaleExists(false));
@@ -24,7 +27,7 @@ const NewBancale = ({ history }) => {
 
     Reactotron.log('Creating a new doc!');
     db.put({
-      _id: `bancale:${event.target.elements.number.value}`,
+      _id: `bancale:${uuid}`,
       number: bancaleNumber,
       family: event.target.elements.family.value,
       width: event.target.elements.width.value,
