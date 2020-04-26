@@ -9,6 +9,10 @@ const EditBancale = (props) => {
   const [error, setError] = useState();
 
   const [bancaleExists, setBancaleExists] = useState(false);
+  const [newBancaleNumber, setNewBancaleNumber] = useState(props.number);
+  const [family, setFamily] = useState(props.family);
+  const [width, setWidth] = useState(props.width);
+  const [lunghezza, setLunghezza] = useState(props.length);
 
   const submitEdit = (e) => {
     const area = props.width * props.length;
@@ -26,10 +30,6 @@ const EditBancale = (props) => {
     }).then(resp => Reactotron.log('Updated Document!', resp)).catch((e) => setError(e));
   };
 
-  const [newBancaleNumber, setNewBancaleNumber] = useState(props.number);
-  const [family, setFamily] = useState(props.family);
-  const [width, setWidth] = useState(props.width);
-  const [lunghezza, setLunghezza] = useState(props.length);
   
   useEffect(() => {
     db.get(`bancale:${newBancaleNumber}`).then(() => newBancaleNumber !== props.number && setBancaleExists(true)).catch(() => setBancaleExists(false));

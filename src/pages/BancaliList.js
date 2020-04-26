@@ -16,13 +16,13 @@ const Bancali = () => {
 
   const [focusedBancale, setFocusedBancale] = useState();
 
+  Reactotron.log('Bancali List', bancali);
 
   
   useEffect(() => {
     db.allDocs({ include_docs: true }).then(resp => setBancali(resp.rows)).catch(setBancaliError);
   }, [db]);
 
-  Reactotron.log('Bancali List', bancali);
 
   return (
     <Layout>
