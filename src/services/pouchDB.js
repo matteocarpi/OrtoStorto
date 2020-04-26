@@ -12,6 +12,7 @@ export function PouchDB({ children, ...opts }) {
     </PouchDBContext.Provider>
   );
 }
+
 export function useDB() {
   return useContext(PouchDBContext);
 }
