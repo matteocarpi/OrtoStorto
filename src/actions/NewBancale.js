@@ -3,6 +3,8 @@ import Layout from '../components/Layout';
 import PropTypes from 'prop-types';
 import Reactotron from 'reactotron-react-js';
 import { useDB } from '../services/pouchDB';
+import 'pouchdb-find';
+
 import { v4 as uuid4 } from 'uuid';
 
 const NewBancale = ({ history }) => {
@@ -18,6 +20,16 @@ const NewBancale = ({ history }) => {
 
   useEffect(() => {
     db.get(`bancale:${bancaleNumber}`).then(() => setBancaleExists(true)).catch(() => setBancaleExists(false));
+
+    db.createIndex({
+      index: {fields: ['number']},
+    });
+    
+    db.find({
+      selector: {
+        number: bancaleNumber,
+      },
+    }).then(resp => Reactotron.log('Find', resp));
   }, [db, bancaleNumber]);
   
   const onSubmitHandling = (event) => {
