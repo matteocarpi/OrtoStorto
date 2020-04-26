@@ -27,7 +27,8 @@ const NewBancale = ({ history }) => {
         number: bancaleNumber,
       },
     }).then(resp => resp.docs.length && setBancaleExists(true));
-  }, [db, bancaleNumber]);
+    
+  }, [db, bancaleNumber, uuid, history]);
   
   const onSubmitHandling = (event) => {
     event.preventDefault();

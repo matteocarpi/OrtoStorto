@@ -6,9 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import './ReactotronConfig';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <App />,
   document.getElementById('root'),
 );
 
