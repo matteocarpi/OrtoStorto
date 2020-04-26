@@ -44,11 +44,10 @@ const NewBancale = ({ history }) => {
       width: event.target.elements.width.value,
       length: event.target.elements.lunghezza.value,
       area: area,
-    }).then()
-      .then((resp) => {
-        Reactotron.log(resp);
-        history.push('/bancali');
-      })
+    }).then((resp) => {
+      Reactotron.log(resp);
+      history.push('/bancali');
+    })
       .catch(e => Reactotron.error(e));
   };
 

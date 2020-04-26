@@ -20,7 +20,19 @@ const Bancali = () => {
 
   
   useEffect(() => {
-    db.allDocs({ include_docs: true }).then(resp => setBancali(resp.rows)).catch(setBancaliError);
+    // db.allDocs({ include_docs: true }).then(resp => setBancali(resp.rows)).catch(setBancaliError);
+
+    db.createIndex({
+      index: {fields: ['collection', 'number']},
+    });
+
+    db.find({
+      selector: {
+        collection: 'bancali',
+        number: { $gte: null },
+      },
+      sort: ['number'],
+    }).then(resp => setBancali(resp.docs)).catch(setBancaliError);
   }, [db]);
 
 
@@ -42,15 +54,18 @@ const Bancali = () => {
         <h1 className={styles.title}>Bancali</h1>
       }
 
-      {!focusedBancale && !bancali  ? <p>Loading...</p>
+      {!focusedBancale && !bancali ?
+        <>
+          <p>Loading...</p>
+          <Link className={styles.createNew} to="/new-bancale">Crea Nuovo Bancale</Link>
+        </>
         
         :
         
         !focusedBancale &&
         <>
           <section className={styles.bancali}>
-            {bancali.map((b, i) => {
-              const bancale = b.doc;
+            {bancali.map((bancale, i) => {
               return (
                 <button onClick={() => setFocusedBancale(bancale)} key={i} className={styles.bancale}>
                   <h2>{bancale.number}</h2>
