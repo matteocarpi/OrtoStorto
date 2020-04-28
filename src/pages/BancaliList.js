@@ -13,7 +13,7 @@ import Bancale from '../components/Bancale';
 
 // @emiliano bovetti <3
 
-const Bancali = () => {
+const Bancali = ({ history }) => {
   const db = useDB();
 
   const [bancali, setBancali] = useState();
@@ -44,23 +44,6 @@ const Bancali = () => {
   return (
     <Router>
       <Layout>
-        
-        <Link className={styles.createNew} to="/new-bancale">Crea Nuovo Bancale</Link>
-        {/* {focusedBancale &&
-      <div>
-        <Bancale
-          number={focusedBancale.number}
-          family={focusedBancale.family}
-          width={focusedBancale.width}
-          length={focusedBancale.length}
-        />
-        <button onClick={() => setFocusedBancale(false)}>Torna a tutti i bancali</button>
-      </div>
-        } */}
-
-        {!focusedBancale &&
-        <h1 className={styles.title}>Bancali</h1>
-        }
 
         {!focusedBancale && !bancali ?
           <>
@@ -72,10 +55,12 @@ const Bancali = () => {
         
           !focusedBancale &&
         <>
+          <h1 className={styles.title}>Bancali</h1>
+          <Link className={styles.createNew} to="/new-bancale">Crea Nuovo Bancale</Link>
           <section className={styles.bancali}>
             {bancali.map((bancale, i) => {
               return (
-                <Link to={`/bancale-${bancale.number}`} key={i} className={styles.bancale}>
+                <Link onClick={()=> history.push(`bancale-${bancale.number}`)} key={i} className={styles.bancale}>
                   <h2>{bancale.number}</h2>
                   <p>{bancale.family}</p>
                 </Link>
@@ -85,14 +70,14 @@ const Bancali = () => {
 
             {bancaliError && <p style={{ color: 'red' }}>Ops... something went wrong</p>}
           </section>
-      
-          <Switch>
-            <Route path="/bancale-:number" children={<Bancale />} />
-          </Switch>
-            
             
         </>
         }
+        <Switch>
+          <Route path="/bancale-:number" children={<Bancale />} />
+        </Switch>
+            
+            
       </Layout>
     </Router>
   );
