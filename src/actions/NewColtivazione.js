@@ -42,6 +42,7 @@ const NewColtivazione = () => {
       rowDistance: rowDistance,
       plantDistance: plantDistance,
       position: position,
+      alivePlants: quantity,
     }).then(resp => {
       Reactotron.log(resp);
       history.push('/coltivazioni');
