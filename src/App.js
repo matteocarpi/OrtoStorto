@@ -6,6 +6,7 @@ import Bancali from './pages/BancaliList';
 import Sidebar from './components/Sidebar';
 import styles from './styles/App.module.scss';
 import { PouchDB } from './services/pouchDB';
+import Bancale from './components/Bancale';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route exact path="/" component={Home} />
             <Route exact path="/new-bancale" component={NewBancale} />
             <Route exact path="/bancali" component={Bancali} />
+            <Route path="/bancale-:number" children={<Bancale />} />
           </div>
         </div>
       </Router>

@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
-import { Link } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+} from 'react-router-dom';
 import { useDB } from '../services/pouchDB';
 import Reactotron from 'reactotron-react-js';
 import styles from '../styles/BancaliList.module.scss';
@@ -37,8 +42,11 @@ const Bancali = () => {
 
 
   return (
-    <Layout>
-      {focusedBancale &&
+    <Router>
+      <Layout>
+        
+        <Link className={styles.createNew} to="/new-bancale">Crea Nuovo Bancale</Link>
+        {/* {focusedBancale &&
       <div>
         <Bancale
           number={focusedBancale.number}
@@ -48,38 +56,45 @@ const Bancali = () => {
         />
         <button onClick={() => setFocusedBancale(false)}>Torna a tutti i bancali</button>
       </div>
-      }
+        } */}
 
-      {!focusedBancale &&
+        {!focusedBancale &&
         <h1 className={styles.title}>Bancali</h1>
-      }
+        }
 
-      {!focusedBancale && !bancali ?
-        <>
-          <p>Loading...</p>
-          <Link className={styles.createNew} to="/new-bancale">Crea Nuovo Bancale</Link>
-        </>
+        {!focusedBancale && !bancali ?
+          <>
+            <p>Loading...</p>
+            <Link className={styles.createNew} to="/new-bancale">Crea Nuovo Bancale</Link>
+          </>
         
-        :
+          :
         
-        !focusedBancale &&
+          !focusedBancale &&
         <>
           <section className={styles.bancali}>
             {bancali.map((bancale, i) => {
               return (
-                <button onClick={() => setFocusedBancale(bancale)} key={i} className={styles.bancale}>
+                <Link to={`/bancale-${bancale.number}`} key={i} className={styles.bancale}>
                   <h2>{bancale.number}</h2>
                   <p>{bancale.family}</p>
-                </button>
+                </Link>
               );
             })}
+              
+
             {bancaliError && <p style={{ color: 'red' }}>Ops... something went wrong</p>}
           </section>
       
-          <Link className={styles.createNew} to="/new-bancale">Crea Nuovo Bancale</Link>
+          <Switch>
+            <Route path="/bancale-:number" children={<Bancale />} />
+          </Switch>
+            
+            
         </>
-      }
-    </Layout>
+        }
+      </Layout>
+    </Router>
   );
 };
 
