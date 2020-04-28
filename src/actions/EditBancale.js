@@ -5,29 +5,46 @@ import Reactotron from 'reactotron-react-js';
 
 const EditBancale = (props) => {
   const db = useDB();
-
+  const { history } = props;
   const [error, setError] = useState();
 
   const [bancaleExists, setBancaleExists] = useState(false);
   const [newBancaleNumber, setNewBancaleNumber] = useState(props.number);
   const [family, setFamily] = useState(props.family);
   const [width, setWidth] = useState(props.width);
-  const [lunghezza, setLunghezza] = useState(props.length);
+  const [length, setLunghezza] = useState(props.length);
 
   const submitEdit = (e) => {
     const area = props.width * props.length;
     e.preventDefault();
-    db.get(`bancale:${props.number}`).then(doc => {
-      return db.put({
-        _id: `bancale:${newBancaleNumber}`,
-        _rev: doc._rev,
+    db.createIndex({
+      index: { fields: ['number'] },
+    });
+
+    db.find({
+      selector: {
         number: newBancaleNumber,
-        family: props.family,
-        width: props.width,
-        length: props.length,
+      },
+    }).then(resp => {
+      const id = resp.docs[0]._id;
+      const editInfo = {
+        _id: id,
+        _rev: resp.docs[0]._rev,
+        collection: 'bancali',
+        number: newBancaleNumber,
+        family: family,
+        width: width,
+        length: length,
         area: area,
-      });
+      };
+
+      Reactotron.log(resp);
+      Reactotron.log('EditData', editInfo);
+      return db.put(editInfo);
     }).then(resp => Reactotron.log('Updated Document!', resp)).catch((e) => setError(e));
+
+    history.push('/bancali');
+    
   };
 
   
@@ -60,7 +77,7 @@ const EditBancale = (props) => {
             </select>
           </p>
           <p><label>Qual è la lunghezza di questo bancale?</label></p>
-          <p><input onChange={e => setLunghezza (e.target.value)} value={lunghezza} step="any" type="number" name="lunghezza" /></p>
+          <p><input onChange={e => setLunghezza (e.target.value)} value={length} step="any" type="number" name="lunghezza" /></p>
           <p><label>E la larghezza?</label></p>
           <p><input onChange={e => setWidth(e.target.value)} value={width} step="any" type="number" name="width" /></p>
           <button type="submit">Aggiorna Bancale!</button>

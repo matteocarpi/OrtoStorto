@@ -24,7 +24,7 @@ const Bancali = () => {
 
     db.createIndex({
       index: {fields: ['collection', 'number']},
-    });
+    }).catch(error => Reactotron.error(error));
 
     db.find({
       selector: {
