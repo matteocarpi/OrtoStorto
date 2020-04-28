@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import EditBancale from '../actions/EditBancale';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDB } from '../services/pouchDB';
 import Reactotron from 'reactotron-react-js';
@@ -13,7 +12,6 @@ const Bancale = () => {
   const [bancaleData, setBancaleData] = useState();
 
   bancaleError && Reactotron.error('Error loading bancale', bancaleError);
-  // const [editBancale, setEditBancale] = useState();
   let { number } = useParams();
 
   db.createIndex({
@@ -34,21 +32,6 @@ const Bancale = () => {
       <p>{JSON.stringify(bancaleData)}</p>
 
       <button onClick={() => history.push('bancali')}>Torna a tutti i bancali</button>
-      {/* {editBancale ?  <EditBancale 
-        number={props.number}
-        family={props.family}
-        width={props.width}
-        length={props.length}
-      />
-        :
-        <>
-          <h1>Bancale Numero: {props.number}</h1>
-          <p>Famiglia: {props.family}</p>
-          <p>Larghezza: {props.width}</p>
-          <p>Lunghezza: {props.length}</p>
-          <button onClick={() => setEditBancale(true)}>Modifica Bancale</button>
-        </>
-      } */}
     </div>
   );
 };
