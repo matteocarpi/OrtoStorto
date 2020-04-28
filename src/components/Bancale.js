@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import EditBancale from '../actions/EditBancale';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useDB } from '../services/pouchDB';
 import Reactotron from 'reactotron-react-js';
 
 const Bancale = () => {
+  let history = useHistory();
+  
   const db = useDB();
   const [bancaleError, setBancaleError] = useState();
   const [bancaleData, setBancaleData] = useState();
@@ -30,6 +32,8 @@ const Bancale = () => {
       <h1>Bancale Numero: {number}</h1>
 
       <p>{JSON.stringify(bancaleData)}</p>
+
+      <button onClick={() => history.push('bancali')}>Torna a tutti i bancali</button>
       {/* {editBancale ?  <EditBancale 
         number={props.number}
         family={props.family}
