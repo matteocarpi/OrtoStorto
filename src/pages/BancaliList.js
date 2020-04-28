@@ -10,6 +10,7 @@ import { useDB } from '../services/pouchDB';
 import Reactotron from 'reactotron-react-js';
 import styles from '../styles/BancaliList.module.scss';
 import Bancale from '../components/Bancale';
+import NewBancale from '../actions/NewBancale';
 
 // @emiliano bovetti <3
 
@@ -52,20 +53,20 @@ const Bancali = ({ history }) => {
         {loading &&
           <>
             <p>Loading...</p>
-            <Link className={styles.createNew} to="/new-bancale">Crea Nuovo Bancale</Link>
+            <button className={styles.createNew} onClick={() => history.push('/new-bancale')}>Crea Nuovo Bancale</button>
           </>
         }
 
         {!loading && bancali &&
         <>
-          <Link className={styles.createNew} to="/new-bancale">Crea Nuovo Bancale</Link>
+          <button className={styles.createNew} onClick={() => history.push('/new-bancale')} to="/new-bancale">Crea Nuovo Bancale</button>
           <section className={styles.bancali}>
             {bancali.map((bancale, i) => {
               return (
-                <Link onClick={() => history.push(`bancale-${bancale.number}`)} to={`/bancale-${bancale.number}`} key={i} className={styles.bancale}>
+                <button onClick={() => history.push(`bancale-${bancale.number}`)} to={`/bancale-${bancale.number}`} key={i} className={styles.bancale}>
                   <h2>{bancale.number}</h2>
                   <p>{bancale.family}</p>
-                </Link>
+                </button>
               );
             })}
               
@@ -78,6 +79,7 @@ const Bancali = ({ history }) => {
 
         <Switch>
           <Route path="/bancale-:number" children={<Bancale />} />
+          <Route path="/bancale-:number" children={<NewBancale />} />
         </Switch>
             
             
