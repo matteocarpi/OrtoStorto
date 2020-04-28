@@ -79,7 +79,6 @@ const Bancali = ({ history }) => {
 
         <Switch>
           <Route path="/bancale-:number" children={<Bancale />} />
-          <Route path="/bancale-:number" children={<NewBancale />} />
         </Switch>
             
             

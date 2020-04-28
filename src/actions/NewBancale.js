@@ -17,7 +17,7 @@ const NewBancale = ({ history }) => {
 
 
   useEffect(() => {
-    // Check is the bancale already exists
+    // Check if the bancale already exists
     db.createIndex({
       index: {fields: ['number']},
     });
@@ -26,9 +26,9 @@ const NewBancale = ({ history }) => {
       selector: {
         number: bancaleNumber,
       },
-    }).then(resp => resp.docs.length && setBancaleExists(true));
+    }).then(resp => resp.docs.length ? setBancaleExists(true) : setBancaleExists(false));
     
-  }, [db, bancaleNumber, uuid, history]);
+  }, [bancaleNumber, db]);
   
   const onSubmitHandling = (event) => {
     event.preventDefault();

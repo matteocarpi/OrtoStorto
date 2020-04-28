@@ -1,29 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { useDB } from '../services/pouchDB';
 import PropTypes from 'prop-types';
+import { useParams, useHistory } from 'react-router-dom';
 import Reactotron from 'reactotron-react-js';
+
 
 const EditBancale = (props) => {
   const db = useDB();
-  const { history } = props;
+
+  let { number } = useParams();
+  const history = useHistory();
+
   const [error, setError] = useState();
 
   const [bancaleExists, setBancaleExists] = useState(false);
-  const [newBancaleNumber, setNewBancaleNumber] = useState(props.number);
-  const [family, setFamily] = useState(props.family);
-  const [width, setWidth] = useState(props.width);
-  const [length, setLunghezza] = useState(props.length);
 
+  const [newBancaleNumber, setNewBancaleNumber] = useState(number);
+
+  const [family, setFamily] = useState();
+  const [width, setWidth] = useState();
+  const [length, setLength] = useState();
+
+
+  
+  // Submit changes
   const submitEdit = (e) => {
     const area = props.width * props.length;
     e.preventDefault();
     db.createIndex({
-      index: { fields: ['number'] },
+      index: { fields: ['collection', 'number'] },
     });
 
     db.find({
       selector: {
-        number: newBancaleNumber,
+        collection: 'bancali',
+        number: number,
       },
     }).then(resp => {
       const id = resp.docs[0]._id;
@@ -41,18 +52,41 @@ const EditBancale = (props) => {
       Reactotron.log(resp);
       Reactotron.log('EditData', editInfo);
       return db.put(editInfo);
-    }).then(resp => Reactotron.log('Updated Document!', resp)).catch((e) => setError(e));
-
-    history.push('/bancali');
-    
+    }).then(resp => {
+      Reactotron.log('Updated Document!', resp);
+      history.push('/bancali');
+    })
+      .catch(e => setError(e));
   };
 
-  
   useEffect(() => {
-    db.get(`bancale:${newBancaleNumber}`).then(() => newBancaleNumber !== props.number && setBancaleExists(true)).catch(() => setBancaleExists(false));
-    Reactotron.log('Bancale exists', bancaleExists);
+    // Fill in with current data
 
-  }, [bancaleExists, db, newBancaleNumber, props.number]);
+    db.createIndex({
+      index: {fields: ['collection', 'number']},
+    });
+    
+    db.find({
+      selector: {
+        collection: { $eq: 'bancali' },
+        number: { $eq: number },
+      },
+    }).then(resp => {
+      const doc = resp.docs[0];
+      setFamily(doc.family);
+      setWidth(doc.width);
+      setLength(doc.length);
+    });
+    
+    // Listen if modified number already exists
+    db.find({
+      selector: {
+        collection: 'bancali',
+        number: newBancaleNumber,
+      },
+    }).then(resp => resp.docs.length && newBancaleNumber !== number ? setBancaleExists(true) : setBancaleExists(false));
+    
+  }, [db, newBancaleNumber, number]);
 
   return (
     <>
@@ -77,7 +111,7 @@ const EditBancale = (props) => {
             </select>
           </p>
           <p><label>Qual è la lunghezza di questo bancale?</label></p>
-          <p><input onChange={e => setLunghezza (e.target.value)} value={length} step="any" type="number" name="lunghezza" /></p>
+          <p><input onChange={e => setLength (e.target.value)} value={length} step="any" type="number" name="lunghezza" /></p>
           <p><label>E la larghezza?</label></p>
           <p><input onChange={e => setWidth(e.target.value)} value={width} step="any" type="number" name="width" /></p>
           <button type="submit">Aggiorna Bancale!</button>

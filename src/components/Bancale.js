@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useParams, useHistory } from 'react-router-dom';
+import { BrowserRouter as Router, useParams, useHistory, Switch, Route } from 'react-router-dom';
 import { useDB } from '../services/pouchDB';
 import Reactotron from 'reactotron-react-js';
+import EditBancale from '../actions/EditBancale';
 
 const Bancale = () => {
   let history = useHistory();
@@ -26,13 +27,21 @@ const Bancale = () => {
   }).then(resp => setBancaleData(resp.docs[0])).catch(setBancaleError);
 
   return (
-    <div>
-      <h1>Bancale Numero: {number}</h1>
+    <Router>
+      <div>
+        <h1>Bancale Numero: {number}</h1>
 
-      <p>{JSON.stringify(bancaleData)}</p>
+        <p>{JSON.stringify(bancaleData)}</p>
 
-      <button onClick={() => history.push('bancali')}>Torna a tutti i bancali</button>
-    </div>
+        <button onClick={() => history.push(`/bancale-${number}/edit`)}>Modifica Bancale</button>
+        <button onClick={() => history.push('/bancali')}>Torna a tutti i bancali</button>
+
+        <Switch>
+          <Route path={'bancale-:number/edit'} children={<EditBancale />} />
+        </Switch>
+
+      </div>
+    </Router>
   );
 };
 
