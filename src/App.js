@@ -20,7 +20,7 @@ function App() {
           <div>
             <Route exact path="/" component={Home} />
             <Route exact path="/new-bancale" component={NewBancale} />
-            <Route exact path="/new-coltivazione" component={NewColtivazione} />
+            <Route exact path="/nuova-coltivazione" component={NewColtivazione} />
             <Route exact path="/coltivazioni" component={Coltivazioni} />
             <Route exact path="/bancali" component={Bancali} />
             <Route exact path="/bancale-:number/" children={<Bancale />} />

@@ -26,7 +26,7 @@ const Coltivazioni = () => {
 
   return (
     <div className={styles.wrap}>
-      <Link className={styles.createNew} to="/new-bancale">Crea Nuova Coltivazione</Link>
+      <Link className={styles.createNew} to="/nuova-coltivazione">Crea Nuova Coltivazione</Link>
 
       <h1>Coltivazioni</h1>
       
