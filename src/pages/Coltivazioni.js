@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../styles/Coltivazioni.module.scss';
 import { useDB } from '../services/pouchDB';
+import Layout from '../components/Layout';
+
 import Reactotron from 'reactotron-react-js';
 
 const Coltivazioni = () => {
@@ -25,19 +27,23 @@ const Coltivazioni = () => {
   }, [db]);
 
   return (
-    <div className={styles.wrap}>
-      <Link className={styles.createNew} to="/nuova-coltivazione">Crea Nuova Coltivazione</Link>
+    <Layout>
 
-      <h1>Coltivazioni</h1>
+      <div className={styles.wrap}>
+        <Link className={styles.createNew} to="/nuova-coltivazione">Crea Nuova Coltivazione</Link>
+
+        <h1>Coltivazioni</h1>
       
-      {coltivazioni && coltivazioni.map((coltivazione, i) => {
-        return (
-          <p key={i}>
-            {JSON.stringify(coltivazione)}
-          </p>
-        );
-      })}
-    </div>
+        {coltivazioni && coltivazioni.map((coltivazione, i) => {
+          return (
+            <p className={styles.cultivation} key={i}>
+              {JSON.stringify(coltivazione)}
+            </p>
+          );
+        })}
+      </div>
+    
+    </Layout>
   );
 };
 
