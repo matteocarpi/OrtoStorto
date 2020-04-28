@@ -25,7 +25,7 @@ const Bancali = ({ history }) => {
 
   
   useEffect(() => {
-    // db.allDocs({ include_docs: true }).then(resp => setBancali(resp.rows)).catch(setBancaliError);
+    
     setLoading(true);
 
     db.createIndex({

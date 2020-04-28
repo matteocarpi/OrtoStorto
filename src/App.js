@@ -21,6 +21,7 @@ function App() {
             <Route exact path="/" component={Home} />
             <Route exact path="/new-bancale" component={NewBancale} />
             <Route exact path="/new-coltivazione" component={NewColtivazione} />
+            <Route exact path="/coltivazioni" component={Coltivazioni} />
             <Route exact path="/bancali" component={Bancali} />
             <Route exact path="/bancale-:number/" children={<Bancale />} />
             <Route exact path="/bancale-:number/edit" children={<EditBancale />} />
