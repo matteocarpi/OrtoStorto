@@ -48,7 +48,7 @@ const NewColtivazione = () => {
     });
 
     coordinates && coordinates.map(coordinate => {
-      db.find({
+      return db.find({
         selector: {
           collection: 'bancali',
           number: coordinate,
@@ -66,6 +66,7 @@ const NewColtivazione = () => {
   const onSubmitHandling = e => {
     e.preventDefault();
 
+    // Create Cultivation
     db.put({
       _id: uuid,
       collection: 'coltivazioni',
@@ -81,6 +82,14 @@ const NewColtivazione = () => {
     }).then(resp => {
       Reactotron.log(resp);
       history.push('/coltivazioni');
+    });
+
+    // Update Hosts
+    hosts && hosts.map(host => {
+      return db.get(host).then(doc => {
+        doc.guests.push(uuid);
+        return db.put(doc);
+      });
     });
   };
 
