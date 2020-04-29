@@ -21,7 +21,7 @@ const Coltivazioni = () => {
         collection: { $eq: 'coltivazioni' },
       },
     }).then(resp => {
-      Reactotron.log(resp);
+      Reactotron.log('All coltivazioni', resp);
       setColtivazioni(resp.docs);
     });
   }, [db]);
