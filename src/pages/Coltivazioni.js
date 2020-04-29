@@ -11,6 +11,8 @@ const Coltivazioni = () => {
   
   const [coltivazioni, setColtivazioni] = useState();
 
+  coltivazioni && Reactotron.log(coltivazioni[coltivazioni.length]);
+
   useEffect(() => {
 
     db.createIndex({

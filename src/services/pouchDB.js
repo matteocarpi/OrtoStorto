@@ -7,6 +7,7 @@ PouchDBCtor.plugin(pouchDBFind);
 // eslint-disable-next-line react/prop-types
 export function PouchDB({ children, ...opts }) {
   const initPouchDB = () => new PouchDBCtor(opts);
+  
   const [db] = useState(initPouchDB);
   return (
     <PouchDBContext.Provider value={db}>

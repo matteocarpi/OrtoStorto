@@ -42,18 +42,18 @@ const NewColtivazione = () => {
   }
 
   useEffect(() => {
-
+    //  Update hosts
     db.createIndex({
       index: { fields: ['collection', 'number'] },
     });
-
-    coordinates && coordinates.map(coordinate => {
-      return db.find({
-        selector: {
-          collection: 'bancali',
-          number: coordinate,
-        },
-      }).then(resp => setHosts(old => [...old, resp.docs[0]._id]));
+    db.find({
+      selector: {
+        collection: 'bancali',
+        number: { $in: coordinates },
+      },
+    }).then(resp => {
+      setHosts(resp.docs);
+      
     });
     // All bancali
     db.find({
@@ -61,6 +61,7 @@ const NewColtivazione = () => {
         collection: 'bancali',
       },
     }).then(resp => setBancali(resp.docs));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [coordinates, db]);
 
   const onSubmitHandling = e => {
@@ -85,12 +86,11 @@ const NewColtivazione = () => {
     });
 
     // Update Hosts
-    hosts && hosts.map(host => {
-      return db.get(host).then(doc => {
-        doc.guests.push(uuid);
-        return db.put(doc);
-      });
-    });
+    hosts && db.bulkDocs(hosts.map(host => {
+      host.guests.push(uuid);
+      return host;
+    },
+    )).then(resp => Reactotron.log('bulk', resp)).catch(e => Reactotron.error(e));
   };
 
   return (
