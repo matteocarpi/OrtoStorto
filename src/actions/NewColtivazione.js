@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDB } from '../services/pouchDB';
 import Layout from '../components/Layout';
 import { v4 as uuid4 } from 'uuid';
@@ -12,6 +12,11 @@ const NewColtivazione = () => {
 
   const currentDate = new Date();
   
+  const [bancali, setBancali] = useState();
+  Reactotron.log('bancali', bancali);
+
+  const [coordinatesNumber, setCoordinatesNumber] = useState(0);
+
   const [name, setName] = useState();
   const [date, setDate] = useState(currentDate.toISOString().substring(0, 10));
   const [type, setType] = useState();
@@ -22,12 +27,30 @@ const NewColtivazione = () => {
   const [plantDistance, setPlantDistance] = useState();
   const [ripening, setRipening] = useState();
   const [position, setPosition] = useState();
+  const [coordinates, setCoordinates] = useState([]);
 
+  Reactotron.log(coordinates);
 
   const uuid = uuid4();
 
+  let coordinatesBits = [];
+
+  for (let i = 0; i <= coordinatesNumber; i++) {
+    coordinatesBits.push('bit');
+  }
 
   Reactotron.log(type);
+
+  useEffect(() => {
+    db.createIndex({
+      index: { fields: ['collection'] },
+    });
+    db.find({
+      selector: {
+        collection: 'bancali',
+      },
+    }).then(resp => setBancali(resp.docs));
+  }, [db]);
 
   const onSubmitHandling = e => {
     e.preventDefault();
@@ -43,6 +66,7 @@ const NewColtivazione = () => {
       plantDistance: plantDistance,
       position: position,
       alivePlants: quantity,
+      coordinates: coordinates,
     }).then(resp => {
       Reactotron.log(resp);
       history.push('/coltivazioni');
@@ -86,6 +110,40 @@ const NewColtivazione = () => {
         </div>
 
         <br/>
+
+        {position === 'Campo' && 
+          <>
+            <label htmlFor="coordinates">Coordinate</label>
+            {coordinatesBits.map((bit, i) => {
+              return (
+                <>
+                  <select onChange={e => {
+                    const value = e.target.value;
+                    setCoordinates(old => [...old, value]);
+                  }
+                  } key={i} id="coordinates">
+                    
+                    <option value=""></option>
+                    {bancali.map((b, i) => {
+                      return (
+                        <option key={i} value={b.number}>Bancale {b.number}</option>
+                      );
+                    })}
+                  </select>
+                </>
+              );
+            }) 
+            }
+            <button onClick={e => {
+              e.preventDefault();
+              setCoordinatesNumber(coordinatesNumber + 1);
+            }}>+</button>
+            <button onClick={e => {
+              e.preventDefault();
+              coordinatesNumber >= 1 && setCoordinatesNumber(coordinatesNumber - 1);
+            }}>-</button>
+          </>
+        }
 
         <div>
 
