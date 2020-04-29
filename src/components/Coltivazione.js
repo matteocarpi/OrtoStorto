@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDB } from '../services/pouchDB';
 import { useParams, useHistory } from 'react-router-dom';
 import Layout from '../components/Layout';
+import styles from '../styles/Coltivazione.module.scss';
 
 // eslint-disable-next-line no-unused-vars
 import Reactotron from 'reactotron-react-js';
@@ -20,7 +21,7 @@ const Coltivazione = () => {
 
   return (
     <Layout>
-      <div>
+      <div className={styles.wrap}>
         <p>{JSON.stringify(data)}</p>
         <button onClick={e => {
           e.preventDefault();
