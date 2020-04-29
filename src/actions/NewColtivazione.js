@@ -13,6 +13,8 @@ const NewColtivazione = () => {
   const currentDate = new Date();
   
   const [bancali, setBancali] = useState();
+  const [hosts, setHosts] = useState([]);
+  Reactotron.log('hosts', hosts);
   Reactotron.log('bancali', bancali);
 
   const [coordinatesNumber, setCoordinatesNumber] = useState(0);
@@ -29,7 +31,7 @@ const NewColtivazione = () => {
   const [position, setPosition] = useState();
   const [coordinates, setCoordinates] = useState([]);
 
-  Reactotron.log(coordinates);
+  Reactotron.log('Coordinates', coordinates);
 
   const uuid = uuid4();
 
@@ -39,18 +41,27 @@ const NewColtivazione = () => {
     coordinatesBits.push('bit');
   }
 
-  Reactotron.log(type);
-
   useEffect(() => {
+
     db.createIndex({
-      index: { fields: ['collection'] },
+      index: { fields: ['collection', 'number'] },
     });
+
+    coordinates && coordinates.map(coordinate => {
+      db.find({
+        selector: {
+          collection: 'bancali',
+          number: coordinate,
+        },
+      }).then(resp => setHosts(old => [...old, resp.docs[0]._id]));
+    });
+    // All bancali
     db.find({
       selector: {
         collection: 'bancali',
       },
     }).then(resp => setBancali(resp.docs));
-  }, [db]);
+  }, [coordinates, db]);
 
   const onSubmitHandling = e => {
     e.preventDefault();
