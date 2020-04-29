@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router, useParams, useHistory, Switch, Route } from 'react-router-dom';
 import { useDB } from '../services/pouchDB';
@@ -11,20 +11,24 @@ const Bancale = () => {
   const db = useDB();
   const [bancaleError, setBancaleError] = useState();
   const [bancaleData, setBancaleData] = useState();
-
+  Reactotron.log(bancaleData);
+  
   bancaleError && Reactotron.error('Error loading bancale', bancaleError);
   let { number } = useParams();
 
-  db.createIndex({
-    index: { fields: ['collection', 'number'] },
-  }).catch(e => Reactotron.error(e));
+  useEffect(() => {
+    db.createIndex({
+      index: { fields: ['collection', 'number'] },
+    }).catch(e => Reactotron.error(e));
+        
+    db.find({
+      selector: {
+        collection: 'bancali',
+        number: { $eq: number },
+      },
+    }).then(resp => setBancaleData(resp.docs[0])).catch(setBancaleError);
+  }, [db, number]);
 
-  db.find({
-    selector: {
-      collection: 'bancali',
-      number: { $eq: number },
-    },
-  }).then(resp => setBancaleData(resp.docs[0])).catch(setBancaleError);
 
   return (
     <Router>
