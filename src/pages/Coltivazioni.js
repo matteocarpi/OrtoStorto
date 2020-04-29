@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import styles from '../styles/Coltivazioni.module.scss';
 import { useDB } from '../services/pouchDB';
 import Layout from '../components/Layout';
@@ -8,7 +8,8 @@ import Reactotron from 'reactotron-react-js';
 
 const Coltivazioni = () => {
   const db = useDB();
-  
+  const history = useHistory();
+
   const [coltivazioni, setColtivazioni] = useState();
 
   coltivazioni && Reactotron.log(coltivazioni[coltivazioni.length]);
@@ -38,9 +39,13 @@ const Coltivazioni = () => {
       
         {coltivazioni && coltivazioni.map((coltivazione, i) => {
           return (
-            <p className={styles.cultivation} key={i}>
-              {JSON.stringify(coltivazione)}
-            </p>
+            <button key={i} onClick={() => history.push(`coltivazioni/${coltivazione._id}/${coltivazione.name}`)}>
+
+              <p className={styles.cultivation}>
+                {coltivazione.name}
+              </p>
+            </button>
+
           );
         })}
       </div>
