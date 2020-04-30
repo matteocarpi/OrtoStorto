@@ -29,7 +29,7 @@ const NewColtivazione = () => {
   const [plantDistance, setPlantDistance] = useState();
   const [ripening, setRipening] = useState();
   const [position, setPosition] = useState();
-  const [coordinates, setCoordinates] = useState([]);
+  const [coordinates, setCoordinates] = useState(['']);
 
   Reactotron.log('Coordinates', coordinates);
 
@@ -134,34 +134,40 @@ const NewColtivazione = () => {
         {position === 'Campo' && 
           <>
             <label htmlFor="coordinates">Coordinate</label>
-            {coordinatesBits.map((bit, i) => {
+            {coordinates && coordinates.map((coordinate, ci) => {
               return (
                 <>
                   <select onChange={e => {
                     const value = e.target.value;
-                    setCoordinates(old => [...old, value]);
+                    setCoordinates(coordinates => {
+                      const newCoords = coordinates.slice();
+                      newCoords[ci] = value;
+                      return newCoords;
+                    });
                   }
-                  } key={i} id="coordinates">
+                  } key={ci} id="coordinates">
                     
                     <option value=""></option>
-                    {bancali.map((b, i) => {
+                    {bancali && bancali.map((b, bi) => {
                       return (
-                        <option key={i} value={b.number}>Bancale {b.number}</option>
+                        <option key={bi} selected={coordinate === b.number} value={b.number}>Bancale {b.number}</option>
                       );
                     })}
                   </select>
+                  <button onClick={() => setCoordinates(coords => {
+                    Reactotron.log(ci);
+                    const newCoords = coords.slice();
+                    newCoords.splice(ci, 1);
+                    return newCoords;
+                  })}>Delete</button>
                 </>
               );
             }) 
             }
             <button onClick={e => {
               e.preventDefault();
-              setCoordinatesNumber(coordinatesNumber + 1);
+              setCoordinates(c => [...c, '']);
             }}>+</button>
-            <button onClick={e => {
-              e.preventDefault();
-              coordinatesNumber >= 1 && setCoordinatesNumber(coordinatesNumber - 1);
-            }}>-</button>
           </>
         }
 
