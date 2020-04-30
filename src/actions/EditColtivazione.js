@@ -22,8 +22,6 @@ const EditColtivazione = () => {
   const [position, setPosition] = useState();
   const [coordinates, setCoordinates] = useState();
 
-
-  
   useEffect(() => {
     db.get(id).then(resp => {
       Reactotron.log('This Data', resp);
