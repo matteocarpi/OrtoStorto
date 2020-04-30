@@ -17,8 +17,6 @@ const NewColtivazione = () => {
   Reactotron.log('hosts', hosts);
   Reactotron.log('bancali', bancali);
 
-  const [coordinatesNumber, setCoordinatesNumber] = useState(0);
-
   const [cultName, setCultName] = useState();
   const [date, setDate] = useState(currentDate.toISOString().substring(0, 10));
   const [type, setType] = useState();
@@ -34,12 +32,6 @@ const NewColtivazione = () => {
   Reactotron.log('Coordinates', coordinates);
 
   const uuid = uuid4();
-
-  let coordinatesBits = [];
-
-  for (let i = 0; i <= coordinatesNumber; i++) {
-    coordinatesBits.push('bit');
-  }
 
   useEffect(() => {
     //  Update hosts
