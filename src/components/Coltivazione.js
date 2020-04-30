@@ -15,6 +15,19 @@ const Coltivazione = () => {
 
   const [data, setData] = useState();
 
+  const deleteCultivation = () => {
+    db.get(id)
+      .then(doc => {
+        doc._deleted = true;
+        return doc;
+      })
+      .then(doc => {
+        db.put(doc).catch(e => Reactotron.error(e));
+        history.push('/coltivazioni');
+      },
+      )
+      .catch(e => Reactotron.error(e));
+  }; 
   useEffect(() => {
     db.get(id).then(resp => setData(resp));
   }, [db, id]);
@@ -26,8 +39,8 @@ const Coltivazione = () => {
 
         <button onClick={() => history.push(`/coltivazioni/${id}/${name}/edit`)}>Modifica Coltivazione</button>
 
+        <button onClick={() => deleteCultivation()}>Elimina Coltivazione</button>
         <button onClick={e => {
-          e.preventDefault();
           history.goBack();
         }}>Indietro</button>
 
