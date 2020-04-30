@@ -1,26 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useDB } from '../services/pouchDB';
-import Layout from '../components/Layout';
-import { v4 as uuid4 } from 'uuid';
-import { useHistory } from 'react-router-dom';
 
 import Reactotron from 'reactotron-react-js';
 
-const NewColtivazione = () => {
+const EditColtivazione = () => {
   const db = useDB();
-  const history = useHistory();
+  let { id, name } = useParams();
 
-  const currentDate = new Date();
-  
   const [bancali, setBancali] = useState();
-  const [hosts, setHosts] = useState([]);
-  Reactotron.log('hosts', hosts);
-  Reactotron.log('bancali', bancali);
-
-  const [coordinatesNumber, setCoordinatesNumber] = useState(0);
 
   const [cultName, setCultName] = useState();
-  const [date, setDate] = useState(currentDate.toISOString().substring(0, 10));
+  const [date, setDate] = useState();
   const [type, setType] = useState();
   const [family, setFamily] = useState();
   const [producer, setProducer] = useState();
@@ -29,96 +20,59 @@ const NewColtivazione = () => {
   const [plantDistance, setPlantDistance] = useState();
   const [ripening, setRipening] = useState();
   const [position, setPosition] = useState();
-  const [coordinates, setCoordinates] = useState([]);
-
-  Reactotron.log('Coordinates', coordinates);
-
-  const uuid = uuid4();
-
-  let coordinatesBits = [];
-
-  for (let i = 0; i <= coordinatesNumber; i++) {
-    coordinatesBits.push('bit');
-  }
+  const [coordinates, setCoordinates] = useState();
 
   useEffect(() => {
-    //  Update hosts
-    db.createIndex({
-      index: { fields: ['collection', 'number'] },
-    });
-    db.find({
-      selector: {
-        collection: 'bancali',
-        number: { $in: coordinates },
-      },
-    }).then(resp => {
-      setHosts(resp.docs);
-      
-    });
+    db.get(id).then(resp => {
+      Reactotron.log('This Data', resp);
+      setCultName(resp.name);
+      setProducer(resp.producer);
+      setFamily(resp.family);
+      setPosition(resp.position);
+      setCoordinates(resp.coordinates && resp.coordinates);
+    }).catch(e => Reactotron.error(e));
+
     // All bancali
     db.find({
       selector: {
         collection: 'bancali',
       },
     }).then(resp => setBancali(resp.docs));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [coordinates, db]);
+  }, [db, id]);
+
+  
 
   const onSubmitHandling = e => {
     e.preventDefault();
-
-    // Create Cultivation
-    db.put({
-      _id: uuid,
-      collection: 'coltivazioni',
-      name: cultName,
-      family: family, 
-      producer: producer,
-      quantity: quantity,
-      rowDistance: rowDistance,
-      plantDistance: plantDistance,
-      position: position,
-      alivePlants: quantity,
-      coordinates: coordinates,
-    }).then(resp => {
-      Reactotron.log(resp);
-      history.push('/coltivazioni');
-    });
-
-    // Update Hosts
-    hosts && db.bulkDocs(hosts.map(host => {
-      host.guests.push(uuid);
-      return host;
-    },
-    )).then(resp => Reactotron.log('bulk', resp)).catch(e => Reactotron.error(e));
   };
-
   return (
-    <Layout>
+    <div>
+      <h1>{name} - {id}</h1>
+
       <form onSubmit={onSubmitHandling} name="createColtivazione">
         
         <p><label>Nome Varietà</label></p>
-        <p><input onChange={e => setCultName(e.target.value)} type="text" name="name"></input></p>
+        <p><input value={cultName} onChange={e => setCultName(e.target.value)} type="text" name="name"></input></p>
 
         <p><label>Produttore</label></p>
-        <p><input onChange={e => setProducer(e.target.value)} type="text" name="producer"></input></p>
+        <p><input value={producer} onChange={e => setProducer(e.target.value)} type="text" name="producer"></input></p>
 
         <p><label>Famiglia</label></p>
         <p>
           <select onChange={e => setFamily(e.target.value)} name="family">
             <option value = ""></option>
-            <option value = "Brassicacee">Brassicacee</option>
-            <option value = "Composite">Composite</option>
-            <option value = "Cucurbitacee">Cucurbitacee</option>
-            <option value = "Leguminose">Leguminose</option>
-            <option value = "Liliacee">Liliacee</option>
-            <option value = "Ombrellifere">Ombrellifere</option>
-            <option value = "Solanacee">Solanacee</option>
+            <option selected={family === 'Brassicacee'} value= "Brassicacee">Brassicacee</option>
+            <option selected={family === 'Composite'} value= "Composite">Composite</option>
+            <option selected={family === 'Cucurbitacee'} value= "Cucurbitacee">Cucurbitacee</option>
+            <option selected={family === 'Leguminose'} value= "Leguminose">Leguminose</option>
+            <option selected={family === 'Liliacee'} value= "Liliacee">Liliacee</option>
+            <option selected={family === 'Ombrellifere'} value= "Ombrellifere">Ombrellifere</option>
+            <option selected={family === 'Solanacee'} value= "Solanacee">Solanacee</option>
           </select>
         </p>
         
         <div>
-          <fieldset id="position" onChange={e => setPosition(e.target.value)}>
+          <fieldset value={position} id="position" onChange={e => setPosition(e.target.value)}>
             <legend>Posizione</legend>
 
             <input type="radio" id="field" value="Campo" name="position" />
@@ -134,34 +88,40 @@ const NewColtivazione = () => {
         {position === 'Campo' && 
           <>
             <label htmlFor="coordinates">Coordinate</label>
-            {coordinatesBits.map((bit, i) => {
+            {coordinates && coordinates.map((coordinate, ci) => {
               return (
                 <>
                   <select onChange={e => {
                     const value = e.target.value;
-                    setCoordinates(old => [...old, value]);
+                    setCoordinates(coordinates => {
+                      const newCoords = coordinates.slice();
+                      newCoords[ci] = value;
+                      return newCoords;
+                    });
                   }
-                  } key={i} id="coordinates">
+                  } key={ci} id="coordinates">
                     
                     <option value=""></option>
-                    {bancali.map((b, i) => {
+                    {bancali && bancali.map((b, bi) => {
                       return (
-                        <option key={i} value={b.number}>Bancale {b.number}</option>
+                        <option key={bi} selected={coordinate === b.number} value={b.number}>Bancale {b.number}</option>
                       );
                     })}
                   </select>
+                  <button onClick={() => setCoordinates(coords => {
+                    Reactotron.log(ci);
+                    const newCoords = coords.slice();
+                    newCoords.splice(ci, 1);
+                    return newCoords;
+                  })}>Delete</button>
                 </>
               );
             }) 
             }
             <button onClick={e => {
               e.preventDefault();
-              setCoordinatesNumber(coordinatesNumber + 1);
+              setCoordinates(c => [...c, '']);
             }}>+</button>
-            <button onClick={e => {
-              e.preventDefault();
-              coordinatesNumber >= 1 && setCoordinatesNumber(coordinatesNumber - 1);
-            }}>-</button>
           </>
         }
 
@@ -201,8 +161,8 @@ const NewColtivazione = () => {
         <button type="submit">Inserisci Coltivazione</button>
 
       </form>
-    </Layout>
+    </div>
   );
 };
 
-export default NewColtivazione;
+export default EditColtivazione;

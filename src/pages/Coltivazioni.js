@@ -39,7 +39,7 @@ const Coltivazioni = () => {
       
         {coltivazioni && coltivazioni.map((coltivazione, i) => {
           return (
-            <button key={i} onClick={() => history.push(`coltivazioni/${coltivazione._id}/${coltivazione.name}`)}>
+            <button key={i} onClick={() => history.push(`/coltivazioni/${coltivazione._id}/${coltivazione.name}`)}>
 
               <p className={styles.cultivation}>
                 {coltivazione.name}

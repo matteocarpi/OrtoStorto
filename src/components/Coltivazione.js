@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDB } from '../services/pouchDB';
-import { useParams, useHistory } from 'react-router-dom';
-import Layout from '../components/Layout';
+import { useParams, useHistory, BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import styles from '../styles/Coltivazione.module.scss';
+import EditColtivazione from '../actions/EditColtivazione';
 
 // eslint-disable-next-line no-unused-vars
 import Reactotron from 'reactotron-react-js';
@@ -11,7 +11,7 @@ const Coltivazione = () => {
   const db = useDB();
 
   let history = useHistory();
-  let { id } = useParams();
+  let { id, name } = useParams();
 
   const [data, setData] = useState();
 
@@ -20,15 +20,23 @@ const Coltivazione = () => {
   }, [db, id]);
 
   return (
-    <Layout>
+    <Router>
       <div className={styles.wrap}>
         <p>{JSON.stringify(data)}</p>
+
+        <button onClick={() => history.push(`/coltivazioni/${id}/${name}/edit`)}>Modifica Coltivazione</button>
+
         <button onClick={e => {
           e.preventDefault();
           history.goBack();
         }}>Indietro</button>
+
+        <Switch>
+          <Route path={'/coltivazioni/:id/:name/edit'} children={<EditColtivazione />} />
+        </Switch>
+
       </div>
-    </Layout>
+    </Router>
   );
 };
 

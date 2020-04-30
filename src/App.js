@@ -11,6 +11,7 @@ import styles from './styles/App.module.scss';
 import { PouchDB } from './services/pouchDB';
 import Bancale from './components/Bancale';
 import EditBancale from './actions/EditBancale';
+import EditColtivazione from './actions/EditColtivazione';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route exact path="/nuova-coltivazione" component={NewColtivazione} />
             <Route exact path="/coltivazioni" component={Coltivazioni} />
             <Route exact path="/coltivazioni/:id/:name" children={<Coltivazione />} />
+            <Route path={'/coltivazioni/:id/:name/edit'} children={<EditColtivazione />} />
             <Route exact path="/bancali" component={Bancali} />
             <Route exact path="/bancale-:number/" children={<Bancale />} />
             <Route exact path="/bancale-:number/edit" children={<EditBancale />} />
