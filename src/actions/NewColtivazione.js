@@ -70,6 +70,7 @@ const NewColtivazione = () => {
       rowDistance: rowDistance,
       plantDistance: plantDistance,
       position: position,
+      type: type,
       alivePlants: quantity,
       coordinates: coordinates,
     }).then(resp => {
