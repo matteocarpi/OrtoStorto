@@ -1,0 +1,17 @@
+.wrap {
+  width: 70%;
+  max-width: 600px;
+  h1 {
+    text-align: center;
+    width: 100%;
+  }
+}
+.createNew {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+.cultivation {
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}

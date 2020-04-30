@@ -43,6 +43,7 @@ const NewBancale = ({ history }) => {
       family: event.target.elements.family.value,
       width: event.target.elements.width.value,
       length: event.target.elements.lunghezza.value,
+      guests: [],
       area: area,
     }).then((resp) => {
       Reactotron.log(resp);

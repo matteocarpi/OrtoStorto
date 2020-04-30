@@ -4,13 +4,11 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
 } from 'react-router-dom';
 import { useDB } from '../services/pouchDB';
 import Reactotron from 'reactotron-react-js';
 import styles from '../styles/BancaliList.module.scss';
 import Bancale from '../components/Bancale';
-import NewBancale from '../actions/NewBancale';
 
 // @emiliano bovetti <3
 
@@ -25,7 +23,7 @@ const Bancali = ({ history }) => {
 
   
   useEffect(() => {
-    // db.allDocs({ include_docs: true }).then(resp => setBancali(resp.rows)).catch(setBancaliError);
+    
     setLoading(true);
 
     db.createIndex({
