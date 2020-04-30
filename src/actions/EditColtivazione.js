@@ -30,6 +30,11 @@ const EditColtivazione = () => {
       setFamily(resp.family);
       setPosition(resp.position);
       setCoordinates(resp.coordinates && resp.coordinates);
+      setDate(resp.date);
+      setRipening(resp.ripening);
+      setQuantity(resp.quantity);
+      setRowDistance(resp.rowDistance);
+      setPlantDistance(resp.plantDistance);
     }).catch(e => Reactotron.error(e));
 
     // All bancali
@@ -72,13 +77,13 @@ const EditColtivazione = () => {
         </p>
         
         <div>
-          <fieldset value={position} id="position" onChange={e => setPosition(e.target.value)}>
+          <fieldset id="position" onChange={e => setPosition(e.target.value)}>
             <legend>Posizione</legend>
 
-            <input type="radio" id="field" value="Campo" name="position" />
+            <input checked={position === 'Campo'} type="radio" id="field" value="Campo" name="position" />
             <label htmlFor="field">Campo</label>
 
-            <input type="radio" id="semenzaio" value="Semenzaio" name="position" />
+            <input checked={position === 'Semenzaio'} type="radio" id="semenzaio" value="Semenzaio" name="position" />
             <label htmlFor="semenzaio">Semenzaio</label>
           </fieldset>
         </div>
@@ -129,10 +134,10 @@ const EditColtivazione = () => {
           <fieldset id="type" onChange={e => setType(e.target.value)}>
             <legend>Tipo</legend>
 
-            <input type="radio" id="seed" value="Semi" name="type" />
+            <input checked={type === 'Semi'} type="radio" id="seed" value="Semi" name="type" />
             <label htmlFor="seed">Seme</label>
 
-            <input type="radio" id="plant" value="Piantine" name="type" />
+            <input checked={type === 'Piantine'} type="radio" id="plant" value="Piantine" name="type" />
             <label htmlFor="plant">Piantina</label>
           </fieldset>
         
@@ -141,7 +146,7 @@ const EditColtivazione = () => {
         {type &&
           <>
             <label htmlFor="quantity">Numero di {type}</label>
-            <p><input onChange={e => setQuantity(e.target.value)} type="number" name="quantity" /></p>
+            <p><input value={quantity} onChange={e => setQuantity(e.target.value)} type="number" name="quantity" /></p>
           </>
         }
 
@@ -152,12 +157,12 @@ const EditColtivazione = () => {
         <p><input onChange={e => setRipening(e.target.value)} id="date" type="number" value={ripening}></input></p>
 
         <label htmlFor="rowDistance">Distanza tra le file</label>
-        <p><input onChange={e => setRowDistance(e.target.value)} type="number" name="rowDistance" /></p>
+        <p><input value={rowDistance} onChange={e => setRowDistance(e.target.value)} type="number" name="rowDistance" /></p>
         
         <label htmlFor="plantDistance">Distanza tra le piante</label>
-        <p><input onChange={e => setPlantDistance(e.target.value)} type="number" name="plantDistance" /></p>
+        <p><input value={plantDistance} onChange={e => setPlantDistance(e.target.value)} type="number" name="plantDistance" /></p>
 
-        <button type="submit">Inserisci Coltivazione</button>
+        <button type="submit">Conferma Modifiche</button>
 
       </form>
     </div>
