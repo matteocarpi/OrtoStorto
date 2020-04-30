@@ -108,8 +108,7 @@ const EditColtivazione = () => {
                       );
                     })}
                   </select>
-                  <button onClick={() => setCoordinates(coords => {
-                    Reactotron.log(ci);
+                  <button onClick={(e) => setCoordinates(coords => {
                     const newCoords = coords.slice();
                     newCoords.splice(ci, 1);
                     return newCoords;

@@ -29,7 +29,7 @@ const NewColtivazione = () => {
   const [plantDistance, setPlantDistance] = useState();
   const [ripening, setRipening] = useState();
   const [position, setPosition] = useState();
-  const [coordinates, setCoordinates] = useState(['']);
+  const [coordinates, setCoordinates] = useState(['select']);
 
   Reactotron.log('Coordinates', coordinates);
 
