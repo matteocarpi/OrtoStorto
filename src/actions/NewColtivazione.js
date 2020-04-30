@@ -74,6 +74,7 @@ const NewColtivazione = () => {
       alivePlants: quantity,
       coordinates: coordinates,
       date: date,
+      ripening: ripening,
     }).then(resp => {
       Reactotron.log(resp);
       history.push('/coltivazioni');
