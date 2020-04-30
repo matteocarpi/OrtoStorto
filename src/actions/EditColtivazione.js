@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useDB } from '../services/pouchDB';
 
 import Reactotron from 'reactotron-react-js';
@@ -7,6 +7,7 @@ import Reactotron from 'reactotron-react-js';
 const EditColtivazione = () => {
   const db = useDB();
   let { id, name } = useParams();
+  let history = useHistory();
 
   const [bancali, setBancali] = useState();
 
@@ -49,6 +50,28 @@ const EditColtivazione = () => {
 
   const onSubmitHandling = e => {
     e.preventDefault();
+    db.get(id)
+      .then(doc => {
+        Reactotron.log('one');
+        doc.name = cultName;
+        doc.producer = producer;
+        doc.family = family;
+        doc.position = position;
+        doc.coordinates = coordinates;
+        doc.date = date;
+        doc.ripening = ripening;
+        doc.quantity = quantity;
+        doc.rowDistance = rowDistance;
+        doc.plantDistance = plantDistance;
+        return doc;
+      })
+      .then(doc => {
+        Reactotron.log('two');
+        db.put(doc)
+          .then(history.push('/coltivazioni'))
+          .catch(e => Reactotron.error(e));
+      })
+      .catch(e => Reactotron.error(e));
   };
   return (
     <div>
