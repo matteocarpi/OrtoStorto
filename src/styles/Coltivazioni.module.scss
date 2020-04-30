@@ -12,6 +12,10 @@
   right: 1rem;
 }
 .cultivation {
-  white-space: pre-wrap;
-  overflow-wrap: break-word;
+  border-bottom: solid 1px black;
+  cursor: pointer;
+  margin: 5rem 0;
+}
+table {
+  border-collapse: unset;
 }
