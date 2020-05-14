@@ -53,15 +53,25 @@ const Coltivazioni = () => {
                 <TableCell>Varietà</TableCell>
                 <TableCell>Famiglia</TableCell>
                 <TableCell>Data di Semina</TableCell>
+                <TableCell>Posizione</TableCell>
               </TableRow>
             </TableHead>
 
             {coltivazioni && coltivazioni.map((coltivazione, index) => {
               return (
-                <TableRow key={index}>
+                <TableRow key={index} onClick={() => history.push(`/coltivazioni/${coltivazione._id}/${coltivazione.name}`)}>
                   <TableCell>{coltivazione.name}</TableCell>
                   <TableCell>{coltivazione.family}</TableCell>
                   <TableCell>{coltivazione.date}</TableCell>
+                  <TableCell>
+                    {coltivazione.position === 'Semenzaio'
+                      ?
+                      coltivazione.position
+                      :
+                      'Bancale ' +
+                      coltivazione.coordinates.join(', ')
+                    }
+                  </TableCell>
                 </TableRow>
               );
             },
