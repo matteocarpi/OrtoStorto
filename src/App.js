@@ -12,6 +12,7 @@ import { PouchDB } from './services/pouchDB';
 import Bancale from './components/Bancale';
 import EditBancale from './actions/EditBancale';
 import EditColtivazione from './actions/EditColtivazione';
+import 'typeface-roboto';
 
 function App() {
   return (
