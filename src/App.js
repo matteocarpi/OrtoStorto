@@ -20,7 +20,7 @@ function App() {
       <Router>
         <div className={styles.container}>
           <Sidebar />
-          <div>
+          <div className={styles.content}>
             <Route exact path="/" component={Home} />
             <Route exact path="/new-bancale" component={NewBancale} />
             <Route exact path="/nuova-coltivazione" component={NewColtivazione} />

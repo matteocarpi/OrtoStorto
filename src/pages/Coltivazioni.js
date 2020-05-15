@@ -4,7 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import styles from '../styles/Coltivazioni.module.scss';
 import { useDB } from '../services/pouchDB';
 import Layout from '../components/Layout';
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel } from '@material-ui/core';
+import { Typography, Paper, Table, TableBody, TableCell, TableHead, TableRow, TableSortLabel } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -65,7 +65,7 @@ function stableSort(array, comparator) {
 }
 
 function EnhancedTableHead(props) {
-  const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+  const { classes, order, orderBy, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -148,70 +148,55 @@ const Coltivazioni = () => {
   return (
     <Layout>
 
-      <Paper className={styles.wrap}>
-        <Link className={styles.createNew} to="/nuova-coltivazione">Crea Nuova Coltivazione</Link>
+      <Link className={styles.createNew} to="/nuova-coltivazione">Crea Nuova Coltivazione</Link>
 
-        <h1>Coltivazioni</h1>
+      <div className={styles.wrap}>
 
-        <Table
-          className={classes.table}
-          aria-labelledby="Coltivazioni"
-          aria-label="enhanced table"
-        >
-          <EnhancedTableHead
-            classes={classes}
-            order={order}
-            orderBy={orderBy}
-            onRequestSort={handleRequestSort}
-          />
-          <TableBody>
-            {coltivazioni && stableSort(coltivazioni, getComparator(order, orderBy))
-              .map((coltivazione, index) => {
-                return (
-                  <TableRow
-                    hover
-                    onClick={() => history.push(`/coltivazioni/${coltivazione._id}/${coltivazione.name}`)}
-                    key={coltivazione.name}
-                  >
-                    <TableCell component="th" scope="row" padding="none">
-                      {coltivazione.name}
-                    </TableCell>
-                    <TableCell align="right">{coltivazione.family}</TableCell>
-                    <TableCell align="right">{coltivazione.date}</TableCell>
-                    <TableCell align="right">
-                      {coltivazione.position === 'Semenzaio'
-                        ?
-                        coltivazione.position
-                        :
-                        'Bancale ' +
+        <Typography variant="h1">Coltivazioni</Typography>
+
+        <Paper elevation={3} className={styles.table}>
+          <Table
+            className={classes.table}
+            aria-labelledby="Coltivazioni"
+            aria-label="enhanced table"
+          >
+            <EnhancedTableHead
+              classes={classes}
+              order={order}
+              orderBy={orderBy}
+              onRequestSort={handleRequestSort}
+            />
+            <TableBody>
+              {coltivazioni && stableSort(coltivazioni, getComparator(order, orderBy))
+                .map((coltivazione) => {
+                  return (
+                    <TableRow
+                      hover
+                      onClick={() => history.push(`/coltivazioni/${coltivazione._id}/${coltivazione.name}`)}
+                      key={coltivazione.name}
+                    >
+                      <TableCell component="th" scope="row" padding="none">
+                        {coltivazione.name}
+                      </TableCell>
+                      <TableCell align="right">{coltivazione.family}</TableCell>
+                      <TableCell align="right">{coltivazione.date}</TableCell>
+                      <TableCell align="right">
+                        {coltivazione.position === 'Semenzaio'
+                          ?
+                          coltivazione.position
+                          :
+                          'Bancale ' +
                           coltivazione.coordinates.join(', ')
-                      }
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-        {/* <table>
-          <tbody>
-            <th>Name</th>
-            <th>Family</th>
-            <th>Date</th>
-            {coltivazioni && coltivazioni.map((coltivazione, i) => {
-              return (
-
-                <tr className={styles.cultivation} key={i} onClick={() => history.push(`/coltivazioni/${coltivazione._id}/${coltivazione.name}`)}>
-                  <td>{coltivazione.name}</td>
-                  <td>{coltivazione.family}</td>
-                  <td>{coltivazione.date}</td>
-                </tr>  
-              );
-            })}
-
-          </tbody>
-        </table> */}
-      </Paper>
+                        }
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </Paper>
     
+      </div>
     </Layout>
   );
 };
