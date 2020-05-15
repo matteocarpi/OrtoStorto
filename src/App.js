@@ -19,7 +19,6 @@ function App() {
     <PouchDB name="orto-storto">
       <Router>
         <div className={styles.container}>
-          <Sidebar />
           <div className={styles.content}>
             <Route exact path="/" component={Home} />
             <Route exact path="/new-bancale" component={NewBancale} />
