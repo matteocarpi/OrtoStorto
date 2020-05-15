@@ -82,7 +82,7 @@ const NewColtivazione = () => {
 
     // Update Hosts
     hosts && db.bulkDocs(hosts.map(host => {
-      host.guests.push(uuid);
+      host.guests.push({ 'name': cultName, 'id': uuid });
       return host;
     },
     )).then(resp => Reactotron.log('bulk', resp)).catch(e => Reactotron.error(e));

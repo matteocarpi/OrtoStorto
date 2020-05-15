@@ -8,7 +8,8 @@ import { useDB } from '../services/pouchDB';
 import Reactotron from 'reactotron-react-js';
 import styles from '../styles/BancaliList.module.scss';
 import Bancale from '../components/Bancale';
-
+import BancaleCard from '../components/BancaleCard';
+import { Typography } from '@material-ui/core';
 // @emiliano bovetti <3
 
 const Bancali = ({ history }) => {
@@ -44,8 +45,9 @@ const Bancali = ({ history }) => {
 
   return (
     <Router>
+      
+      <Typography variant="h2">Bancali</Typography>
 
-      <h1 className={styles.title}>Bancali</h1>
       {loading &&
           <>
             <p>Loading...</p>
@@ -62,9 +64,18 @@ const Bancali = ({ history }) => {
                 <button onClick={() => history.push(`bancale-${bancale.number}`)} to={`/bancale-${bancale.number}`} key={i} className={styles.bancale}>
                   <h2>{bancale.number}</h2>
                   <p>{bancale.family}</p>
+                  <ul>
+
+                    {bancale.guests.map(guest => {
+                      return (
+                        <li>{guest.name}</li>
+                      );
+                    })}
+                  </ul>
                 </button>
               );
             })}
+            <BancaleCard />
               
 
             {bancaliError && <p style={{ color: 'red' }}>Ops... something went wrong</p>}
