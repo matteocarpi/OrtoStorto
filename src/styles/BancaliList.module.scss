@@ -3,6 +3,8 @@
 }
 .bancali {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 .bancale {
     h2 {

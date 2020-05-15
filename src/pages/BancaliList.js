@@ -61,22 +61,15 @@ const Bancali = ({ history }) => {
           <section className={styles.bancali}>
             {bancali.map((bancale, i) => {
               return (
-                <button onClick={() => history.push(`bancale-${bancale.number}`)} to={`/bancale-${bancale.number}`} key={i} className={styles.bancale}>
-                  <h2>{bancale.number}</h2>
-                  <p>{bancale.family}</p>
-                  <ul>
-
-                    {bancale.guests.map(guest => {
-                      return (
-                        <li>{guest.name}</li>
-                      );
-                    })}
-                  </ul>
-                </button>
+                <BancaleCard
+                  key={bancale.name}
+                  family={bancale.family}
+                  name={bancale.number}
+                  guests={bancale.guests}
+                  url={`/bancale-${bancale.number}/`}
+                />
               );
             })}
-            <BancaleCard />
-              
 
             {bancaliError && <p style={{ color: 'red' }}>Ops... something went wrong</p>}
           </section>
