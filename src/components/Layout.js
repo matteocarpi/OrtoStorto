@@ -6,17 +6,13 @@ import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import styles from '../styles/Layout.module.scss';
+import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 
 const drawerWidth = 240;
@@ -71,9 +67,7 @@ const navigation = [
 // eslint-disable-next-line react/prop-types
 const Layout = (props) => {
   let history = useHistory();
-  const { window } = props;
   const classes = useStyles();
-  const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -85,7 +79,7 @@ const Layout = (props) => {
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {navigation.map((item, index) => (
+        {navigation.map((item) => (
           <ListItem button key={item} onClick={() => history.push(item.link)}>
             <ListItemText primary={item.label} />
           </ListItem>
@@ -93,8 +87,6 @@ const Layout = (props) => {
       </List>
     </div>
   );
-
-  const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
     <div className={classes.root}>
@@ -116,24 +108,6 @@ const Layout = (props) => {
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Hidden smUp implementation="css">
-          <Drawer
-            container={container}
-            variant="temporary"
-            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
-            }}
-          >
-            {drawer}
-          </Drawer>
-        </Hidden>
         <Hidden xsDown implementation="css">
           <Drawer
             classes={{
@@ -152,6 +126,15 @@ const Layout = (props) => {
       </main>
     </div>
   );
+};
+
+Layout.propTypes = {
+  /**
+   * Injected by the documentation to work in an iframe.
+   * You won't need it on your project.
+   */
+  window: PropTypes.func,
+  children: PropTypes.any,
 };
 
 export default Layout;
