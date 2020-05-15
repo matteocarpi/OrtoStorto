@@ -6,7 +6,6 @@ import NewColtivazione from './actions/NewColtivazione';
 import Bancali from './pages/BancaliList';
 import Coltivazioni from './pages/Coltivazioni';
 import Coltivazione from './components/Coltivazione';
-import styles from './styles/App.module.scss';
 import { PouchDB } from './services/pouchDB';
 import Bancale from './components/Bancale';
 import EditBancale from './actions/EditBancale';

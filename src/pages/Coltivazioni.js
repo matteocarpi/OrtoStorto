@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom';
 import styles from '../styles/Coltivazioni.module.scss';
 import { useDB } from '../services/pouchDB';
-import Layout from '../components/Layout';
 import { Typography, Paper, Table, TableBody, TableCell, TableHead, TableRow, TableSortLabel } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
