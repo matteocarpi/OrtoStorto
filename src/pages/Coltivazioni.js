@@ -151,7 +151,7 @@ const Coltivazioni = () => {
 
       <div className={styles.wrap}>
 
-        <Typography variant="h1">Coltivazioni</Typography>
+        <Typography variant="h2">Coltivazioni</Typography>
 
         <Paper elevation={3} className={styles.table}>
           <Table

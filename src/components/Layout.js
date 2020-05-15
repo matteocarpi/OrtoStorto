@@ -206,7 +206,7 @@ export default function PermanentDrawerLeft(props) {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" noWrap>
-            Permanent drawer
+            Orto Storto
           </Typography>
         </Toolbar>
       </AppBar>
