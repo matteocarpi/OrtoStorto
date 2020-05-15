@@ -45,17 +45,16 @@ const Bancali = ({ history }) => {
 
   return (
     <Router>
-      <Layout>
 
-        <h1 className={styles.title}>Bancali</h1>
-        {loading &&
+      <h1 className={styles.title}>Bancali</h1>
+      {loading &&
           <>
             <p>Loading...</p>
             <button className={styles.createNew} onClick={() => history.push('/new-bancale')}>Crea Nuovo Bancale</button>
           </>
-        }
+      }
 
-        {!loading && bancali &&
+      {!loading && bancali &&
         <>
           <button className={styles.createNew} onClick={() => history.push('/new-bancale')} to="/new-bancale">Crea Nuovo Bancale</button>
           <section className={styles.bancali}>
@@ -73,14 +72,12 @@ const Bancali = ({ history }) => {
           </section>
             
         </>
-        }
+      }
 
-        <Switch>
-          <Route path="/bancale-:number" children={<Bancale />} />
-        </Switch>
-            
-            
-      </Layout>
+      <Switch>
+        <Route path="/bancale-:number" children={<Bancale />} />
+      </Switch>
+
     </Router>
   );
 };

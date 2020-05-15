@@ -3,12 +3,10 @@ import Layout from '../components/Layout';
 
 const Dashboard = () => {
   return (
-    <Layout>
-      <div>
-        <h1>Dashboard</h1>
-        <br></br>
-      </div>
-    </Layout>
+    <div>
+      <h1>Dashboard</h1>
+      <br></br>
+    </div>
   );
 };
 

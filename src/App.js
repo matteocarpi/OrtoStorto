@@ -19,19 +19,15 @@ function App() {
     <PouchDB name="orto-storto">
       <Router>
         <Layout>
-          <div className={styles.container}>
-            <div className={styles.content}>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/new-bancale" component={NewBancale} />
-              <Route exact path="/nuova-coltivazione" component={NewColtivazione} />
-              <Route exact path="/coltivazioni" component={Coltivazioni} />
-              <Route exact path="/coltivazioni/:id/:name" children={<Coltivazione />} />
-              <Route path={'/coltivazioni/:id/:name/edit'} children={<EditColtivazione />} />
-              <Route exact path="/bancali" component={Bancali} />
-              <Route exact path="/bancale-:number/" children={<Bancale />} />
-              <Route exact path="/bancale-:number/edit" children={<EditBancale />} />
-            </div>
-          </div>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/new-bancale" component={NewBancale} />
+          <Route exact path="/nuova-coltivazione" component={NewColtivazione} />
+          <Route exact path="/coltivazioni" component={Coltivazioni} />
+          <Route exact path="/coltivazioni/:id/:name" children={<Coltivazione />} />
+          <Route path={'/coltivazioni/:id/:name/edit'} children={<EditColtivazione />} />
+          <Route exact path="/bancali" component={Bancali} />
+          <Route exact path="/bancale-:number/" children={<Bancale />} />
+          <Route exact path="/bancale-:number/edit" children={<EditBancale />} />
         </Layout>
       </Router>
     </PouchDB>

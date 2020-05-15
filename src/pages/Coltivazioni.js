@@ -146,8 +146,7 @@ const Coltivazioni = () => {
   }, [db]);
 
   return (
-    <Layout>
-
+    <>
       <Link className={styles.createNew} to="/nuova-coltivazione">Crea Nuova Coltivazione</Link>
 
       <div className={styles.wrap}>
@@ -197,7 +196,7 @@ const Coltivazioni = () => {
         </Paper>
     
       </div>
-    </Layout>
+    </>
   );
 };
 
