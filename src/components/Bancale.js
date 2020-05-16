@@ -4,7 +4,16 @@ import { BrowserRouter as Router, useParams, useHistory, Switch, Route } from 'r
 import { useDB } from '../services/pouchDB';
 import Reactotron from 'reactotron-react-js';
 import EditBancale from '../actions/EditBancale';
-import { Card, Button, Typography, Divider, CircularProgress } from '@material-ui/core';
+import {
+  Card,
+  Button,
+  Typography,
+  Divider,
+  CircularProgress,
+  List,
+  ListItem,
+  Link,
+} from '@material-ui/core';
 import styles from '../styles/Bancale.module.scss';
 
 const Bancale = () => {
@@ -42,10 +51,13 @@ const Bancale = () => {
     <Router>
       <div>
         <Typography variant="h2">Bancale {number}</Typography>
+        <Typography variant="h5">{data && data.family}</Typography>
+        
+        
         {loading && <CircularProgress/>}
+        
         {data && 
-          <>
-            <Typography variant="h5">{data && data.family}</Typography>
+          <div className={styles.info}>
         
             <Card className={styles.card}>
               <Typography variant="h6">Dimensioni</Typography>
@@ -55,8 +67,38 @@ const Bancale = () => {
               <Typography>{`Area: ${data.area}m\u00b2`}</Typography>
               
             </Card>
+            
+            <Card className={styles.card}>
+            
+              <Typography variant="h6">
+                {
+                  data.guests.length > 0 ? 
+                    data.guests < 2 ? 'Coltivazione'
+                      :
+                      'Coltivazioni'
+                    :
+                    'Spazio Libero!'
+                }
+              </Typography>
+              <Divider></Divider>
+              <List>
+                {data.guests.map(guest => {
+                  return (
+                    <ListItem key={guest.id}>
+                      <ListItem>
+                        <Link href={`/coltivazioni/${guest.id}/${guest.name}`} >
+                      
+                      - {guest.name}
+                        </Link>
+                      </ListItem>
+                    </ListItem>
+                  );
+                })}
+              </List>
+              
+            </Card>
             <p>{JSON.stringify(data)}</p>
-          </>
+          </div>
         }
 
         <Button variant="contained" onClick={() => history.push(`/bancale-${number}/edit`)}>Modifica Bancale</Button>

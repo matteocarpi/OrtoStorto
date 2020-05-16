@@ -38,7 +38,7 @@ export default function BancaleCard(props) {
         <Typography className={classes.pos} color="textSecondary">
           {props.family}
         </Typography>
-        <Typography variant="h6">{props.guests.length > 0 ? 'Colture' : 'Spazio Libero!'}</Typography>
+        <Typography variant="h6">{props.guests && props.guests.length > 0 ? 'Colture' : 'Spazio Libero!'}</Typography>
         <List>
           {props.guests && props.guests.map(guest => {
             return (
