@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
 } from 'react-router-dom';
@@ -44,8 +43,8 @@ const Bancali = ({ history }) => {
 
 
   return (
-    <Router>
-      
+    <React.Fragment>
+
       <Typography variant="h2">Bancali</Typography>
 
       {loading &&
@@ -80,8 +79,7 @@ const Bancali = ({ history }) => {
       <Switch>
         <Route path="/bancale-:number" children={<Bancale />} />
       </Switch>
-
-    </Router>
+    </React.Fragment>
   );
 };
 
