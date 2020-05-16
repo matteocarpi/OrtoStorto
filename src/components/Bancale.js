@@ -4,15 +4,18 @@ import { BrowserRouter as Router, useParams, useHistory, Switch, Route } from 'r
 import { useDB } from '../services/pouchDB';
 import Reactotron from 'reactotron-react-js';
 import EditBancale from '../actions/EditBancale';
+import { Card, Button, Typography, Divider, CircularProgress } from '@material-ui/core';
+import styles from '../styles/Bancale.module.scss';
 
 const Bancale = () => {
   let history = useHistory();
   
   const db = useDB();
   const [bancaleError, setBancaleError] = useState();
-  const [bancaleData, setBancaleData] = useState();
-  Reactotron.log(bancaleData);
+  const [data, setData] = useState();
   
+  const [loading, setLoading] = useState(true);
+
   bancaleError && Reactotron.error('Error loading bancale', bancaleError);
   let { number } = useParams();
 
@@ -26,19 +29,38 @@ const Bancale = () => {
         collection: 'bancali',
         number: { $eq: number },
       },
-    }).then(resp => setBancaleData(resp.docs[0])).catch(setBancaleError);
+    }).then(resp => {
+      setData(resp.docs[0]);
+      setLoading(false);
+    },
+    )
+      .catch(setBancaleError);
   }, [db, number]);
 
 
   return (
     <Router>
       <div>
-        <h1>Bancale Numero: {number}</h1>
+        <Typography variant="h2">Bancale {number}</Typography>
+        {loading && <CircularProgress/>}
+        {data && 
+          <>
+            <Typography variant="h5">{data && data.family}</Typography>
+        
+            <Card className={styles.card}>
+              <Typography variant="h6">Dimensioni</Typography>
+              <Divider></Divider>
+              <Typography>Larghezza: {data.width}m</Typography>
+              <Typography>Lunghezza: {data.length}m</Typography>
+              <Typography>{`Area: ${data.area}m\u00b2`}</Typography>
+              
+            </Card>
+            <p>{JSON.stringify(data)}</p>
+          </>
+        }
 
-        <p>{JSON.stringify(bancaleData)}</p>
-
-        <button onClick={() => history.push(`/bancale-${number}/edit`)}>Modifica Bancale</button>
-        <button onClick={() => history.push('/bancali')}>Torna a tutti i bancali</button>
+        <Button variant="contained" onClick={() => history.push(`/bancale-${number}/edit`)}>Modifica Bancale</Button>
+        <Button variant="outlined" onClick={() => history.push('/bancali')}>Torna a tutti i bancali</Button>
 
         <Switch>
           <Route path={'bancale-:number/edit'} children={<EditBancale />} />
