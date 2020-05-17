@@ -191,7 +191,7 @@ const NewColtivazione = () => {
         <p><input onChange={e => setDate(e.target.value)} id="date" type="date" value={date}></input></p>
         
         <label htmlFor="ripening">Tempo di maturazione</label>
-        <p><input onChange={e => setRipening(e.target.value)} id="date" type="number" value={ripening}></input></p>
+        <p><input onChange={e => setRipening(e.target.value)} id="ripening" type="number" value={ripening}></input></p>
 
         <label htmlFor="rowDistance">Distanza tra le file</label>
         <p><input onChange={e => setRowDistance(e.target.value)} type="number" name="rowDistance" /></p>

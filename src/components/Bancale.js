@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { BrowserRouter as Router, useParams, useHistory, Switch, Route } from 'react-router-dom';
+import { useParams, useHistory, Switch, Route } from 'react-router-dom';
 import { useDB } from '../services/pouchDB';
 import Reactotron from 'reactotron-react-js';
 import EditBancale from '../actions/EditBancale';
@@ -48,15 +48,14 @@ const Bancale = () => {
 
 
   return (
-    <Router>
-      <div>
-        <Typography variant="h2">Bancale {number}</Typography>
-        <Typography variant="h5">{data && data.family}</Typography>
+    <div>
+      <Typography variant="h2">Bancale {number}</Typography>
+      <Typography variant="h5">{data && data.family}</Typography>
         
         
-        {loading && <CircularProgress/>}
+      {loading && <CircularProgress/>}
         
-        {data && 
+      {data && 
           <div className={styles.info}>
         
             <Card className={styles.card}>
@@ -71,18 +70,18 @@ const Bancale = () => {
             <Card className={styles.card}>
             
               <Typography variant="h6">
-                {
+                { data.guests &&
                   data.guests.length > 0 ? 
-                    data.guests < 2 ? 'Coltivazione'
-                      :
-                      'Coltivazioni'
+                  data.guests < 2 ? 'Coltivazione'
                     :
-                    'Spazio Libero!'
+                    'Coltivazioni'
+                  :
+                  'Spazio Libero!'
                 }
               </Typography>
               <Divider></Divider>
               <List>
-                {data.guests.map(guest => {
+                {data.guests && data.guests.map(guest => {
                   return (
                     <ListItem key={guest.id}>
                       <ListItem>
@@ -97,19 +96,17 @@ const Bancale = () => {
               </List>
               
             </Card>
-            <p>{JSON.stringify(data)}</p>
           </div>
-        }
+      }
 
-        <Button variant="contained" onClick={() => history.push(`/bancale-${number}/edit`)}>Modifica Bancale</Button>
-        <Button variant="outlined" onClick={() => history.push('/bancali')}>Torna a tutti i bancali</Button>
+      <Button variant="contained" onClick={() => history.push(`/bancale-${number}/edit`)}>Modifica Bancale</Button>
+      <Button variant="outlined" onClick={() => history.push('/bancali')}>Torna a tutti i bancali</Button>
 
-        <Switch>
-          <Route path={'bancale-:number/edit'} children={<EditBancale />} />
-        </Switch>
+      <Switch>
+        <Route path={'bancale-:number/edit'} children={<EditBancale />} />
+      </Switch>
 
-      </div>
-    </Router>
+    </div>
   );
 };
 

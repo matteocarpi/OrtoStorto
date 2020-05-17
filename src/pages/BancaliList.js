@@ -61,6 +61,7 @@ const Bancali = ({ history }) => {
             {bancali.map((bancale, i) => {
               return (
                 <BancaleCard
+                  data={bancali}
                   key={bancale.name}
                   family={bancale.family}
                   name={bancale.number}
