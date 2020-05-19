@@ -1,4 +1,7 @@
-.wrap {
-  max-width: 500px;
-  overflow-wrap: break-word;
+
+.subTitle {
+  display: flex;
+  .subTitleElem:first-of-type + .subTitleElem {
+    margin: 0 0.5rem;
+  }
 }

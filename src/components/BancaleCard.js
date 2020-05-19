@@ -32,7 +32,7 @@ export default function BancaleCard(props) {
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Typography variant="h5" component="h2">
+        <Typography variant="h4" component="h2">
           {props.name}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">

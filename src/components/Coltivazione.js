@@ -3,7 +3,7 @@ import { useDB } from '../services/pouchDB';
 import { useParams, useHistory, Route, Switch } from 'react-router-dom';
 import styles from '../styles/Coltivazione.module.scss';
 import EditColtivazione from '../actions/EditColtivazione';
-import { Typography, CircularProgress } from '@material-ui/core';
+import { Typography, CircularProgress, Chip } from '@material-ui/core';
 
 // eslint-disable-next-line no-unused-vars
 import Reactotron from 'reactotron-react-js';
@@ -57,10 +57,26 @@ const Coltivazione = () => {
     <div className={styles.wrap}>
       {loading && <CircularProgress />}
       {data &&
-        <>
-          <Typography variant="h2">{data.name}</Typography>
-        <Typography variant="h3">{new Date(data.date).getDay()} {months[new Date(data.date).getMonth()]} {new Date(data.date).getFullYear()}</Typography>
-          <p>{JSON.stringify(data)}</p>
+        <div className={styles.wrap}>
+          <Typography className={styles.title} variant="h2">{data.name}</Typography>
+          <div className={styles.subTitle}>
+            <Typography className={styles.subTitleElem} variant="h6">{data.producer}</Typography>
+            <Typography className={styles.subTitleElem} variant="h6">
+              -
+            </Typography>
+            <Typography className={styles.subTitleElem} variant="h6">{new Date(data.date).getDay()} {months[new Date(data.date).getMonth()]} {new Date(data.date).getFullYear()}</Typography>
+          </div>
+          <div className={styles.position}>
+            {data.position === 'Semenzaio'
+              ?
+              <Typography>Semenzaio</Typography>
+              :
+              data.coordinates.map(coord => {
+                return <Chip onClick={() => history.push(`/bancale-${coord}`)} key={coord} label={coord} />;
+              })
+            }
+          </div>
+          <Typography variant="h5">{data.alivePlants} Piante</Typography>
 
           <button onClick={() => history.push(`/coltivazioni/${id}/${name}/edit`)}>Modifica Coltivazione</button>
 
@@ -68,7 +84,7 @@ const Coltivazione = () => {
           <button onClick={e => {
             history.goBack();
           }}>Indietro</button>
-        </>
+        </div>
 
       }
       <Switch>
